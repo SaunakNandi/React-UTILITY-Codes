@@ -1,6 +1,6 @@
-import { useState } from 'react'
+
 import './App.css'
-import AutoComplete from './components/autocomplete'
+import AutoComplete from './components/AutoComplete'
 
 function App() {
   // const staticData = [

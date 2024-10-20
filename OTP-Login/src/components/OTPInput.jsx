@@ -14,7 +14,6 @@ export default function OTPinput({length=4,onOTPsubmit=()=>{}}) {
         const val=e.target.value
         if(isNaN(val)) return
         const newOtp=[...otp]
-        // console.log(val)
 
         // allow only 1 input
         newOtp[i]=val.substring(val.length-1)
@@ -46,6 +45,7 @@ export default function OTPinput({length=4,onOTPsubmit=()=>{}}) {
             inputRef.current[i-1].focus()
         } 
     }
+    
   return (
     <>
         <div>
@@ -53,6 +53,7 @@ export default function OTPinput({length=4,onOTPsubmit=()=>{}}) {
                 otp.map((val,i)=>(
                     <input key={i} type='text' value={val}
                     ref={(input)=>{
+                        // console.log(inputRef)
                         inputRef.current[i]=input
                         // console.log(input)
                     }}

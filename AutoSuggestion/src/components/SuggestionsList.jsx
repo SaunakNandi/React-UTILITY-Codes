@@ -19,16 +19,17 @@ export default function SuggestionsList({suggestions=[],
                 </span>
             )
         }
-        
+        console.log(suggestions)
   return (
     <>
         {suggestions.map((suggestion,index)=>{
-            const currentSuggestion= dataKey? suggestion[dataKey]:suggestion
+            // const currentSuggestion= dataKey? suggestion[dataKey]:suggestion
+            // console.log(suggestion[dataKey])
             return (
                 <li key={index}
                 onClick={()=>onSuggestionClick(suggestion)}
                 className='suggestion-item'>
-                    {getHighlightedText(currentSuggestion,highlight)}
+                    {getHighlightedText(suggestion[dataKey],highlight)}
                 </li>
             )
         })}

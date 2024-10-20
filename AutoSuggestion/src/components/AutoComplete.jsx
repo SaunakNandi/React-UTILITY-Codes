@@ -16,6 +16,7 @@ export default function AutoComplete({
     const [suggestion,setSuggestion]=useState([])
     const [loading,setLoading]=useState(false)
     const [error,setError]=useState(null)
+    const [selected,setSelected]=useState(false)
     const getSuggestions=async(query)=>{
         setError(null)
         setLoading(true)
@@ -38,25 +39,26 @@ export default function AutoComplete({
         }
     }
 
-    const handleSuggestionClick=(suggestion)=>{
-        setInputValue(dataKey? suggestion[dataKey]:dataKey)
-        setSuggestion([])
-    }
-
+    
     // Debouncing
     // useCallback returns a memoised function
     const suggestionDebounce= useCallback(debounce(getSuggestions,300),[])
     
     useEffect(()=>{
-        if(inputValue.length>0)
+        if(inputValue.length>0 && !selected)
             suggestionDebounce(inputValue)
         else
-            setSuggestion([])
+        setSuggestion([])
     },[inputValue])  
-    
+
+    const handleSuggestionClick=(suggestion)=>{
+        setInputValue(dataKey? suggestion[dataKey]:dataKey)
+        setSuggestion([])
+        setSelected(true)
+    }
     const handleInputChange=(event)=>{
         setInputValue(event.target.value)
-        // onChange(event.target.value)
+        setSelected(false)
     }
     console.log(dataKey)
   return (

@@ -32,10 +32,10 @@ export default function PhoneOTP() {
             alert("Invalid phone number")
             return
         }
-
+        setShowOTP(true)
         // call the backend api
 
-        SignIn()
+        // SignIn()
 
         // show OTP 
         
@@ -61,7 +61,7 @@ export default function PhoneOTP() {
             {/* <input type="text" 
             value={phoneNumber}
             onChange={handlePhoneNumber}
-            placeholder='Enter Phone Number'/> */}
+            placeholder='Enter Phoned Number'/> */}
         
             <button className='sms-btn'>Send code via SMS</button>
             <div id="recaptcha"></div>
@@ -69,7 +69,7 @@ export default function PhoneOTP() {
         ) :(
             <div>
                 <p>Enter the OTP sent to your mobile number {phoneNumber}</p>
-                <OTPinput length={4} onOTPsubmit={onOTPsubmit}/>
+                <OTPinput onOTPsubmit={onOTPsubmit}/>
             </div>
         )
         }
