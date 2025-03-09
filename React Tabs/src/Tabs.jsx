@@ -15,7 +15,7 @@ export const Tabs = ({tabsData,onChange}) => {
         </div>
         <div className="tabs_content">
             {
-                tabsData[currentTabIndxex].content
+                tabsData[currentTabIndex].content
             }
         </div>
     </div>
