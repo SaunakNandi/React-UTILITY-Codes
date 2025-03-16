@@ -14,8 +14,7 @@ const TextField = ({label="",placeholder="",id="",value="",error="",disabled=fal
         <label htmlFor={id}>{label}{required && <sup>*</sup>}</label>
         {/* disabled={disabled} readOnly={readonly} causing problem */}
         <input id={id} name={name} value={value} type="text" disabled={disabled} readOnly={readonly}
-        onBlur={handleBlur}
-        placeholder={'placeholder'} onChange={handleChange}/>
+        onBlur={handleBlur} placeholder={'placeholder'} onChange={handleChange}/>
         {
           !!error && <span style={{color:'red'}}>{error}</span>
         }

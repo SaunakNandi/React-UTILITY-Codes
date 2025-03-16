@@ -50,22 +50,25 @@ function App() {
         name:'phone',
         error:'',
         readonly:false,
-        disabled:false       
+        required:true,
+        disabled:false   
     },
     {
         type:'checkbox',
         label:'Accept T&C',
-        value:'accept_terms',
+        value:'',
         id:'accept_terms',
         name:'accept_terms',
         error:'',
         readonly:false,
         disabled:false,
         checked: false,
+        required:true,
     }
   ]
   const [inputs,setInputs]=useState(Inputs)
   console.log({...inputs})
+  
   const onInputChange=({id,index,value,type,checked})=>{
     console.log(id,index,value,checked,type)
     const oldState=structuredClone(inputs)
@@ -73,6 +76,7 @@ function App() {
     {
       console.log("Checked")
       oldState[index].checked=checked
+      oldState[index].value=checked?'accept_terms':''
     }
     else
     {
@@ -82,7 +86,7 @@ function App() {
   }
 
   const onInputBlur=({id,index,value,type,checked})=>{
-    console.log("onInputBlur ",id,index,value,checked,type)
+    
     const oldState=structuredClone(inputs)
     if(type==='text')
     {

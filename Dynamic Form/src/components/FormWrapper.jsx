@@ -8,10 +8,6 @@ const FormWrapper = ({disableSubmit,inputs,onInputChange,onCancel, onSubmit, onB
     onSubmit()
   }
 
-  function handleBlur(){
-
-  }
-
   console.log({...inputs})
   return (
     <form className='form-wrapper' onSubmit={handleSubmit}>
