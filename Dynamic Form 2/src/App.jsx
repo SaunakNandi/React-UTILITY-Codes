@@ -101,7 +101,7 @@ function App() {
   }
 
   const onInputBlur=({id,index,value,type,checked,categoryKey})=>{
-    console.log("onInputBlur ",id,index,value,checked,type)
+    // console.log("onInputBlur ",id,index,value,checked,type)
     const oldState=structuredClone(inputs)
     if(type==='text')
     {
