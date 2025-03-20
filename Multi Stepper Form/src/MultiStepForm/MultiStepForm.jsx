@@ -7,6 +7,13 @@ const Page={
     step2:2,
     step3:3
 }
+
+const Steps={
+    [Page.step1]:Step1,
+    [Page.step2]:Step2,
+    [Page.step3]:Step3
+}
+
 const MultiStepForm = ({onSubmit=()=>{},onCancel}) => {
     const [currentStep,setCurrentStep] = useState(Page.step1)
     const [inputs,setInputs] = useState({
@@ -24,14 +31,6 @@ const MultiStepForm = ({onSubmit=()=>{},onCancel}) => {
         }
     })
     
-    const Steps={
-        [Page.step1]:Step1,
-        [Page.step2]:Step2,
-        [Page.step3]:Step3
-    }
-    const Component=Steps[currentStep]
-    const submitButtonText=Page.step3===currentStep?"Save":"Next"
-
     function HandleBack(e){
         e.preventDefault()
         if(currentStep>1)
@@ -40,9 +39,7 @@ const MultiStepForm = ({onSubmit=()=>{},onCancel}) => {
     function handleNext(e)
     {
         e.preventDefault()
-        if(currentStep===Page.step1)
-            setCurrentStep(currentStep+1)
-        else if(currentStep===Page.step2)
+        if(currentStep<Page.step3)
             setCurrentStep(currentStep+1)
         else
         {
@@ -50,22 +47,25 @@ const MultiStepForm = ({onSubmit=()=>{},onCancel}) => {
             onSubmit(inputs)
         }
     }
-
+    
     function handleInputChange({stepKey,value,inputkey})
     {
         const oldInputs=structuredClone(inputs)
         oldInputs[stepKey][inputkey]=value
         setInputs(oldInputs)
     }
+    const Component=Steps[currentStep]
+    const submitButtonText=Page.step3===currentStep?"Save":"Next"
   return (
     <div className="multi-step-form">
         {
             currentStep>Page.step1 && <button onClick={HandleBack}>Back</button>
         }
-        <form action="">
+        <form >
             {/* step1, step2, step3 */}
             <Component inputs={inputs[`step${currentStep}`]} onChange={handleInputChange} stepKey={`step${currentStep}`}/>
             <div>
+                
                 <button className="" onClick={onCancel} type='button'>Cancel</button>
                 <button className="success" onClick={handleNext}>{submitButtonText}</button>
             </div>

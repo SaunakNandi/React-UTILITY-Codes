@@ -35,6 +35,19 @@ export const explorer={
                     ]
                 }
             ]
+        },
+        {
+            id:"6",
+            name:"src",
+            isFolder:true,
+            items:[
+                {
+                    id:"7",
+                    isFolder:false,
+                    name:"index.html",
+                    items:[]
+                }
+            ]
         }
     ]
 }

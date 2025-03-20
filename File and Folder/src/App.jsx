@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { explorer } from './constants/data'
 import {Folder} from './components/Folder'
 import { useTraverseTree } from './hooks/use-traverse-tree'
+import { ExplorerContext } from './context/Explorer'
 
 function App() {
   const [explorerData, setExplorerData] = useState(explorer)
@@ -10,10 +11,25 @@ function App() {
     const finalTree=insertNode(explorerData,folderId,value,isFolder)
     setExplorerData(finalTree)
   }
+  const {setShowInput}=useContext(ExplorerContext)
+  const handleNewFolder=(e,isFolder)=>{
+    e.stopPropagation()
+    // setExpand(true)
+    setShowInput({
+        visible: true,
+        isFolder
+    })
+  }
+
   return (
     <>
-      <div className="App">
-        <Folder explorer={explorerData} handleInsertNode={handleInsertNode}/>
+      <div className="App">      
+          <div>
+            <button onClick={(e) => handleNewFolder(e, true)}>Folder ➕</button>
+            <button onClick={(e) => handleNewFolder(e, false)}>File ➕</button>
+          </div>
+          <Folder explorer={explorerData} handleInsertNode={handleInsertNode}/>
+    
       </div>
     </>
   )

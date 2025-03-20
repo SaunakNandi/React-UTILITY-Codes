@@ -1,0 +1,35 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.slot{
+  width: 100%;
+  height: 5rem;
+  padding-left: 1rem;
+  border-bottom: 1px solid lightgray;
+}
+
+.calendar{
+  position: relative;
+}
+
+.line{
+  position: absolute;
+  left: 4rem;
+  width: 1px;
+  height: 100%;
+  background-color: lightblue;
+}
+
+.event{
+  position: absolute;
+  width: calc(100% - 5rem);
+  left: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid lightblue;
+  background-color: lightgreen;
+}

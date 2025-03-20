@@ -9,12 +9,12 @@ function App() {
     setFormSubmitted(true)
   }
   function onCancel(){
-    setFormSubmitted(true)
+    setCancel(true)
   }
   return (
     <>
       {formSubmitted && <h1>Form Submitted</h1>}
-      {formSubmitted && (
+      {!formSubmitted && (
         <MultiStepForm onCancel={onCancel} onSubmit={onSubmit}/>
         )}
       {cancel && <h1>User want's to cancel</h1>}

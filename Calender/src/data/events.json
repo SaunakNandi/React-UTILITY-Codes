@@ -1,0 +1,30 @@
+[
+    {
+        "id":1,
+        "title":"Morning Meeting",
+        "start":"09:00:00",
+        "end":"10:00:00",
+        "description":"Discuss the project requirements"
+    },
+    {
+        "id":2,
+        "title":"Team Sync",
+        "start":"10:30:00",
+        "end":"11:30:00",
+        "description":"Discuss the project requirements"
+    },
+    {
+        "id":1,
+        "title":"Morning Meeting",
+        "start":"14:00:00",
+        "end":"15:00:00",
+        "description":"Discuss the project requirements"
+    },
+    {
+        "id":1,
+        "title":"Morning Meeting",
+        "start":"18:00:00",
+        "end":"19:00:00",
+        "description":"Discuss the project requirements"
+    }
+]
