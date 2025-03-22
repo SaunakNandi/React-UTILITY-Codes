@@ -1,0 +1,69 @@
+.comment-value{
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.comment-actions{
+  display: flex;
+  gap: 1rem;
+}
+
+.reply-btn,.delete-btn{
+  background-color: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 0.75rem;
+}
+
+.delete-btn{
+  color: red;
+}
+
+.reply-btn:hover,.delete-btn:hover{
+  text-decoration: underline;
+}
+
+.reply-form{
+  margin-top: 0.5rem;
+}
+
+.reply-textarea{
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  resize: none;
+}
+
+.reply-textarea{
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  resize: auto;
+}
+
+.post-reply-btn{
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.post-reply-btn:hover{
+  background-color: #0056b3;
+}
+
+/* Nested comments are indented and separated with*/
+
+.nested-comments{
+  padding-left: 1rem;
+  border-left: 1px solid gray;
+  margin-top: 0.5rem;
+}

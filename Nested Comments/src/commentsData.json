@@ -1,0 +1,34 @@
+{
+    "comments":{
+        "1":{
+            "id":"1",
+            "value":"Liked your video",
+            "parentId":null,
+            "children":[2,3]
+        },
+        "2":{
+            "id":"2",
+            "value":"Great video!",
+            "parentId":"1",
+            "children":[]
+        },
+        "3":{
+            "id":"3",
+            "value":"I agree",
+            "parentId":"1",
+            "children":[4]
+        },
+        "4":{
+            "id":"4",
+            "value":"I also agree",
+            "parentId":"3",
+            "children":[5]
+        },
+        "5":{
+            "id":"5",
+            "value":"Need more videos like this",
+            "parentId":"4",
+            "children":[]
+        }
+    }
+}
