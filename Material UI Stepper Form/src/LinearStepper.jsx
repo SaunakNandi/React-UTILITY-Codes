@@ -1,15 +1,19 @@
 import { Button, Step, StepLabel, Stepper, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { act, useState } from 'react'
 import { useForm,FormProvider, useFormContext, Controller} from 'react-hook-form';
 
 const BasicInformation=()=>{
-    const {control}=useFormContext()
+    const {control, formState:{errors}}=useFormContext()
     return(
         <>
             <Controller control={control} 
             name='firstname'
+            rules={{
+                required:true,
+                minLength:3
+            }}
             render={({field})=>{
-                console.log(field)
+                console.log(errors.firstname)
                 return(
                     <TextField
                     id='first-name'
@@ -18,12 +22,20 @@ const BasicInformation=()=>{
                     margin='normal'
                     {...field}
                     fullWidth
-                    variant='outlined'/>
+                    variant='outlined'
+                    error={!!errors.firstname}  // can aslo be done as Boolean(errors.firstname)
+                    helperText={errors.firstname && "First Name is required"}/>
                 )
             }}/>
             <Controller control={control}
             name='lastname'
-            render={({field})=>(
+            rules={{
+                required:true,
+                minLength:3
+            }}
+            render={({field})=>{
+                console.log(errors.lastname)
+                return(
                 <TextField
                     id='Last-name'
                     label='Last Name'
@@ -31,8 +43,10 @@ const BasicInformation=()=>{
                     margin='normal'
                     fullWidth
                     {...field}
-                    variant='outlined'/>
-            )}
+                    variant='outlined'
+                    error={!!errors.lastname}
+                    helperText={errors.lastname && "last Name is required"}/>
+                )}}
             />
                     
                     
@@ -45,6 +59,9 @@ const ContactInformation=()=>{
         <>
             <Controller control={control} 
             name='email'
+            rules={{
+                required:true,
+            }}
             render={({field})=>(
                 <TextField
                     id='email'
@@ -53,11 +70,17 @@ const ContactInformation=()=>{
                     margin='normal'
                     {...field}
                     fullWidth
-                    variant='outlined'/>
+                    variant='outlined'
+                    error={!!errors.email}
+                    helperText={errors.email && 'Email id is required'}/>
                 )}/>
             
             <Controller control={control}
             name='phoneNumber'
+            rules={{
+                required:true,
+                minLength:10
+            }}
             render={({field})=>(
                 <TextField
                     id='phone-number'
@@ -66,7 +89,9 @@ const ContactInformation=()=>{
                     margin='normal'
                     {...field}
                     fullWidth
-                    variant='outlined'/>
+                    variant='outlined'
+                    error={!!errors.phoneNumber}
+                    helperText={errors.phoneNumber && 'Phone Number is required'}/>
             )}
             />
         </>
@@ -110,6 +135,10 @@ const PaymentInformation=()=>{
         <>
             <Controller control={control}
             name='cardNumber'
+            rules={{
+                required:true,
+                minLength:12
+            }}
             render={({field})=>(
                 <TextField
                     id='cardNumber'
@@ -118,11 +147,18 @@ const PaymentInformation=()=>{
                     margin='normal'
                     {...field}
                     fullWidth
-                    variant='outlined'/>
+                    variant='outlined'
+                    error={!!errors.cardNumber}
+                    helperText={errors.cardNumber && 'Card Number is required'}
+                    />
             )}/>
             
             <Controller control={control}
             name='cardMonth'
+            rules={{
+                required:true,
+                minLength:2
+            }}
             render={({field})=>(
                 <TextField
                     id='cardMonth'
@@ -131,21 +167,28 @@ const PaymentInformation=()=>{
                     margin='normal'
                     {...field}
                     fullWidth
-                    variant='outlined'/>
+                    variant='outlined'
+                    error={!!errors.cardMonth}
+                    helperText={errors.cardMonth && 'Card Month is required'}
+                    />
             )}/>
             <Controller control={control}
             name="cardYear"
+            rules={{
+                required:true,
+                minLength:3
+            }}
             render={({field})=>(
                 <TextField
-                        id="cardYear"
-                        label="Card Year"
-                        variant="outlined"
-                        placeholder="Enter Your Card Year"
-                        fullWidth
-                        {...field}
-                        margin="normal"
-                        name="cardYear"
-                    />
+                    id="cardYear"
+                    label="Card Year"
+                    variant="outlined"
+                    placeholder="Enter Your Card Year"
+                    fullWidth
+                    {...field}
+                    margin="normal"
+                    error={!!errors.cardYear}
+                    helperText={errors.cardYear && 'Card Year is required'}/>
             )}/>
         </>
     )
@@ -182,6 +225,9 @@ const LinearStepper = () => {
             cardYear:''
         }
     })
+    const isStepFailed=()=>{
+        return Boolean(Object.keys(methods.formState.errors).length)
+    }
     const steps=[
         "Basic information",    // 0
         "Contact information",  //1
@@ -189,7 +235,7 @@ const LinearStepper = () => {
         "Payment"               // 3
     ]
     function isStepOptional(step) {
-        return step==1 || step==2
+        return step==2
     }
     function isStepSkipped(step){
         return skippedStep.includes(step)
@@ -203,6 +249,7 @@ const LinearStepper = () => {
         setActiveStep((prevActiveStep)=>prevActiveStep+1)
     }
     function HandleNext(data){
+        if(isStepFailed()) return
         if(activeStep===steps.length-1)
             console.log(data)
         setSkippedStep(prev=>(prev.filter(skip=>skip!=activeStep)))
@@ -229,9 +276,12 @@ const LinearStepper = () => {
                             </Typography>
                         )
                     }
+                    if(isStepFailed() && activeStep===i)
+                        labelProps.error=true
                     if(isStepSkipped(i))
                         stepProps.completed=false
                     return(
+                        // You can check this in documentation 'https://mui.com/material-ui/react-stepper/'
                         <Step {...stepProps} key={i}>
                             <StepLabel {...labelProps}>{step}</StepLabel>
                         </Step>
