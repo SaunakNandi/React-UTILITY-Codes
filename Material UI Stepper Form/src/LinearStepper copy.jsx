@@ -2,186 +2,111 @@ import { Button, Step, StepLabel, Stepper, TextField, Typography } from '@mui/ma
 import React, { useState } from 'react'
 import { useForm,FormProvider, useFormContext, Controller} from 'react-hook-form';
 
-const BasicInformation=()=>{
-    const {control}=useFormContext()
-    return(
-        <>
-            <Controller control={control} 
-            name='firstname'
-            render={({field})=>{
-                console.log(field)
-                return(
+function getSteps(step)
+{
+    switch(step){
+        case 0:
+            return (
+                <>
                     <TextField
                     id='first-name'
                     label='First Name'
                     placeholder='Enter your first name'
                     margin='normal'
-                    {...field}
+                    name='firstname'
                     fullWidth
                     variant='outlined'/>
-                )
-            }}/>
-            <Controller control={control}
-            name='lastname'
-            render={({field})=>(
-                <TextField
-                    id='Last-name'
-                    label='Last Name'
-                    placeholder='Enter your last name'
+                    <TextField
+                    id='first-name'
+                    label='First Name'
+                    placeholder='Enter your first name'
                     margin='normal'
+                    name='firstname'
                     fullWidth
-                    {...field}
                     variant='outlined'/>
-            )}
-            />
                     
-                    
-        </>
-    )
-}
-const ContactInformation=()=>{
-    const {control}=useFormContext()
-    return(
-        <>
-            <Controller control={control} 
-            name='email'
-            render={({field})=>(
-                <TextField
+                </>
+            );
+        case 1:
+            return(
+                <>
+                    <TextField
                     id='email'
                     label='Email'
                     placeholder='Enter your email'
                     margin='normal'
-                    {...field}
+                    name='email'
                     fullWidth
                     variant='outlined'/>
-                )}/>
-            
-            <Controller control={control}
-            name='phoneNumber'
-            render={({field})=>(
-                <TextField
+                    <TextField
                     id='phone-number'
                     label='Phone Number'
                     placeholder='Enter your Phone Number'
                     margin='normal'
-                    {...field}
+                    name='phoneNumber'
                     fullWidth
                     variant='outlined'/>
-            )}
-            />
-        </>
-            
-    )
-}
-const PersonalInformation=()=>{
-    const {control}=useFormContext()
-    return (
-        <>
-            <Controller control={control}
-            name='address1'
-            render={({field})=>(
+                </>
+            );
+        case 2:
+            return (
+                <>
                 <TextField
                     id='address1'
                     label='Address'
                     placeholder='Enter your Address'
                     margin='normal'
-                    {...field}
+                    name='address1'
                     fullWidth
                     variant='outlined'/>
-            )}/>
-            <Controller control={control}
-            name='country'
-            render={({field})=>(
-                <TextField
+                    <TextField
                     id='country'
                     label='Country'
                     placeholder='Enter your country'
                     margin='normal'
-                    {...field}
+                    name='country'
                     fullWidth
                     variant='outlined'/>
-            )}/>
-        </>
-    )
-}
-const PaymentInformation=()=>{
-    const {control}=useFormContext()
-    return (
-        <>
-            <Controller control={control}
-            name='cardNumber'
-            render={({field})=>(
-                <TextField
+                </>
+            );
+        case 3:
+            return (
+                <>
+                    <TextField
                     id='cardNumber'
                     label='Card Number'
                     placeholder='Enter your card number'
                     margin='normal'
-                    {...field}
+                    name='cardNumber'
                     fullWidth
                     variant='outlined'/>
-            )}/>
-            
-            <Controller control={control}
-            name='cardMonth'
-            render={({field})=>(
-                <TextField
+                    <TextField
                     id='cardMonth'
                     label='Card Month'
                     placeholder='Enter your Card Month'
                     margin='normal'
-                    {...field}
+                    name='cardMonth'
                     fullWidth
                     variant='outlined'/>
-            )}/>
-            <Controller control={control}
-            name="cardYear"
-            render={({field})=>(
-                <TextField
+                    <TextField
                         id="cardYear"
                         label="Card Year"
                         variant="outlined"
                         placeholder="Enter Your Card Year"
                         fullWidth
-                        {...field}
                         margin="normal"
                         name="cardYear"
                     />
-            )}/>
-        </>
-    )
-}
-
-function getSteps(step)
-{
-    switch(step){
-        case 0:
-            return <BasicInformation/>;
-        case 1:
-            return <ContactInformation/>;
-        case 2:
-            return <PersonalInformation/>;
-        case 3:
-            return <PaymentInformation/>
+                </>
+            )
             default: return "Unknown step"
     }
 }
 
-const LinearStepper = () => {
+const LinearStepperX = () => {
     const [activeStep,setActiveStep] =useState(0)
     const [skippedStep,setSkippedStep]=useState([])
-    const methods=useForm({
-        defaultValues:{
-            firstname:'',
-            lastname:'',
-            email:'',
-            phoneNumber:'',
-            address1:'',
-            country:'',
-            cardNumber:'',
-            cardMonth:'',
-            cardYear:''
-        }
-    })
+    const methods=useForm()
     const steps=[
         "Basic information",    // 0
         "Contact information",  //1
@@ -202,9 +127,7 @@ const LinearStepper = () => {
             setSkippedStep(prev=>[...prev,activeStep])
         setActiveStep((prevActiveStep)=>prevActiveStep+1)
     }
-    function HandleNext(data){
-        if(activeStep===steps.length-1)
-            console.log(data)
+    function HandleNext(){
         setSkippedStep(prev=>(prev.filter(skip=>skip!=activeStep)))
         setActiveStep((prevActiveStep)=>prevActiveStep+1);
     }
@@ -247,7 +170,7 @@ const LinearStepper = () => {
             ):(
                 <>
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(HandleNext)}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
                         {getSteps(activeStep)}
                         <Button disabled={activeStep===0} 
                     onClick={HandleBack}>
@@ -261,8 +184,7 @@ const LinearStepper = () => {
                         )
                     }
                     <Button variant='contained' color='primary'
-                    // onClick={HandleNext} 
-                    type='submit'>
+                    onClick={HandleNext} type='submit'>
                         {activeStep===steps.length-1? "Finish":"Next"}
                     </Button>
                         </form>
@@ -275,4 +197,4 @@ const LinearStepper = () => {
   )
 }
 
-export default LinearStepper
+export default LinearStepperX
