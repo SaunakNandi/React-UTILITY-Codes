@@ -4,6 +4,7 @@ const Carousel = ({children}) => {
     const [currentInd,setCurrentInd]=useState(0)
     const carouselBoxRef=useRef()
     const intervalRef=useRef(0)
+    
     useEffect(()=>{
         // showing the first image
         const {slides}=getSlidesInfo()
@@ -12,19 +13,26 @@ const Carousel = ({children}) => {
         return () => clearInterval(intervalRef.current);
     },[])
 
-    // function HandleCarouselMovement(curIdx,newIdx,next)
-    // {
-    //     if(next)
-    //     {
-    //         // hide the previous one
-    //         slides[curIdx].classList.remove('show','showL')
-    //         slides[curIdx].classList.add('hide')
+    function HandleCarouselMovement(slides,curIdx,newIdx,next=false)
+    {
+        if(next)
+        {
+            // hide the previous one
+            slides[curIdx].classList.remove('show','showL')
+            slides[curIdx].classList.add('hide')
 
-    //         // show next one
-    //         slides[newIdx].classList.remove('hide','hideL')
-    //         slides[newIdx].classList.add('show') 
-    //     }
-    // }
+            // show next one
+            slides[newIdx].classList.remove('hide','hideL')
+            slides[newIdx].classList.add('show') 
+        }
+        else
+        {
+            slides[curIdx].classList.remove('show','showL')
+            slides[curIdx].classList.add('hideL')
+            slides[newIdx].classList.add('showL')
+            slides[newIdx].classList.remove('hide','hideL')
+        }
+    }
     function startSlider(){
         // subscription
         // The setInterval function keeps running indefinitely even if the component unmounts, which can cause unexpected behavior.
@@ -33,22 +41,8 @@ const Carousel = ({children}) => {
         const {slides,count}=getSlidesInfo()
         intervalRef.current=setInterval(()=>{
         setCurrentInd((prev)=>{
-            const newIndx=prev==count-1? 0:prev+1;
-            
-            // converting slides to array
-            // [...slides].forEach((element,i) => {
-            //     // set 'data-active' to current active element
-            //     element.setAttribute("data-active",i==newIndx)
-            // });
-
-            // hide previous one
-            slides[prev].classList.remove('show','showL')
-            slides[prev].classList.add('hide')
-
-            // show next one
-            slides[newIndx].classList.remove('hide','hideL')
-            slides[newIndx].classList.add('show')     
-            // HandleCarouselMovement(prev,newIndx,true)       
+            const newIndx=prev==count-1? 0:prev+1;   
+            HandleCarouselMovement(slides,prev,newIndx,true)       
             // console.log(newIndx)
             return newIndx
         })
@@ -65,29 +59,16 @@ const Carousel = ({children}) => {
         clearInterval(intervalRef.current)
         const {slides,count}=getSlidesInfo()
         const newIndx=currentInd==0? count-1:currentInd-1;
-        // [...slides].forEach((element,i) => {
-        //     // set 'data-active' to current active element
-        //     element.setAttribute("data-active",i==newIndx)
-        // });
-        slides[currentInd].classList.remove('show','showL')
-        slides[currentInd].classList.add('hideL')
-        slides[newIndx].classList.add('showL')
-        slides[newIndx].classList.remove('hide','hideL')
+        HandleCarouselMovement(slides,currentInd,newIndx)
         startSlider()
         setCurrentInd(newIndx)
     }
     function handleNext(){
         clearInterval(intervalRef.current)
         const {slides,count}=getSlidesInfo()
-        const newIndx=currentInd==count-1? 0:currentInd+1;
-        // [...slides].forEach((element,i) => {
-        //     // set 'data-active' to current active element
-        //     element.setAttribute("data-active",i==newIndx)
-        // });
-        slides[currentInd].classList.remove('show','showL')
-        slides[currentInd].classList.add('hide')
-        slides[newIndx].classList.add('show')
-        slides[newIndx].classList.remove('hide','hideL')
+        const newIndx=currentInd==count-1? 0:currentInd+1;  
+        HandleCarouselMovement(slides,currentInd,newIndx,true)    
+
         startSlider()
         setCurrentInd(newIndx)
     }
