@@ -1,6 +1,6 @@
 import React, { useState,useRef, useEffect } from 'react'
 
-const Stopwatch = () => {
+const Stopwatch = ({handleAdd}) => {
 
     const [time,setTime]=useState(0)
     const stopwatchRef=useRef(0)
@@ -60,14 +60,16 @@ const Stopwatch = () => {
         const hr=Math.floor((time/(1000*60*60))).toString().padStart(2,"0")
         return `${hr}:${min}:${sec}:${ms}`
     }
+
     return (
         <div className='stopwatch'>
-        <span className='time'>{formatTime()}</span>
-        <div>
-            <button onClick={handleStart}>Start</button>
-            <button onClick={handlePause}>Pause</button>
-            <button onClick={handleReset}>Reset</button>
-        </div>
+            <span className='time'>{formatTime()}</span>
+            <div>
+                <button onClick={handleStart}>Start</button>
+                <button onClick={handlePause}>Pause</button>
+                <button onClick={handleReset}>Reset</button>
+                <button onClick={handleAdd}>ADD</button>
+            </div>
         </div>
     )
 }
