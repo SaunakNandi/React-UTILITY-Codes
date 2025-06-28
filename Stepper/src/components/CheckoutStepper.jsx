@@ -16,8 +16,8 @@ export const CheckoutStepper = ({steps=[]}) => {
             marginLeft:stepRef.current[0].offsetWidth/2,
             marginRight:stepRef.current[steps.length-1].offsetWidth/2
         })
-        console.log(stepRef.current[0].offsetWidth,stepRef.current[steps.length-1].offsetWidth)
-    },[stepRef,steps.length-1])
+        console.log(stepRef.current[0].offsetWidth/2,stepRef.current[steps.length-1].offsetWidth)
+    },[])
     if(!steps.length)
     {
         return (
@@ -47,29 +47,25 @@ export const CheckoutStepper = ({steps=[]}) => {
   return (
     <>
         <div className='stepper'>
-            {
-                steps.map((x,ind)=>(
-                    <div 
-                    className={`step ${currentStep>ind+1 || 
-                        isComplete?"complete":""}
-                        ${currentStep===ind+1?"active":""}
-                        ${currentStep===steps.length? 'complete' : ''}`} 
-                        ref={el=>(stepRef.current[ind]=el)}
-                        key={x.name}>
-                        {
-                            
-                                <div className="step-number">
-                                {
-                                    currentStep>ind+1 || isComplete 
-                                    || currentStep===steps.length? <span>&#10003;</span>:ind+1
-                                }
-                                </div>
-                            
-                        }
-                        <div className="step-name">{x.name}</div>
+        {
+            steps.map((x,ind)=>(
+                <div className={`step ${currentStep>ind+1 || 
+                isComplete || currentStep===steps.length?"complete":""}
+                ${currentStep===ind+1?"active":""}`} 
+                ref={el=>(stepRef.current[ind]=el)}
+                key={x.name}>
+                {
+                    <div className="step-number">
+                    {
+                        currentStep>ind+1 || isComplete 
+                        || currentStep===steps.length? <span>&#10003;</span>:ind+1
+                    }
                     </div>
-                ))
-            } 
+                }
+                    <div className="step-name">{x.name}</div>
+                </div>
+            ))
+        }   
 
             <div className="progress-bar"
             style={{
@@ -77,13 +73,13 @@ export const CheckoutStepper = ({steps=[]}) => {
                 marginLeft:margins.marginLeft,
                 marginRight:margins.marginRight,
             }}>
-                <div className="progress"
-                style={{width:`${calculateProgressBarWidth()}%`}}></div>
+                <div className="progress" style={{width:`${calculateProgressBarWidth()}%`}}/>
             </div>
         </div>
         <ActiveComponent/>
         {
-            !isComplete && <button
+            !isComplete && 
+            <button
             className='btn'
             onClick={handleNext}>{currentStep===steps.length? 'Finish':'Next'}</button>
         }

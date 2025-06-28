@@ -1,4 +1,4 @@
-.stepper{
+  .stepper{
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -41,8 +41,6 @@
   .progress-bar{
     position: absolute;
     top: 25%;
-    /* width: 100%; */
-    /* width: calc(100%-100px); */
     left: 0;
     height: 4px;
     background-color: grey;
