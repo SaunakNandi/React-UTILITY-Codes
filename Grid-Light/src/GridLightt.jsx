@@ -7,22 +7,20 @@ const config=[
 ]
 
 export function GridLight(){
-    const [stack,setStack]=useState(new Map())
+    const [stack,setStack]=useState(new Map())  // to store the lights in order of insertion
     function hanldeClick(rowIndex,colIndex){
         return ()=>{
             const newStack=structuredClone(stack)
             const key=`${rowIndex}-${colIndex}`
 
             // ignoring if key already included or config[rowIndex][colIndex] is 0 
-            if(newStack.get(key) || !config[rowIndex][colIndex])
-            {
-                return
-            }
+            if(newStack.get(key) || !config[rowIndex][colIndex]) return
             else{
                 newStack.set(key,true)
             }
             setStack(newStack)
 
+            // sum of all 1=number of lights
             const lightSelected=config.flat().reduce((a,b)=>{
                 return a+b;
             },0)
@@ -62,9 +60,7 @@ export function GridLight(){
                                 lightClass+="on"
                             return (
                                 <div className={`light ${lightClass}`}key={colIndex}
-                                onClick={hanldeClick(rowIndex,colIndex)}>
-
-                                </div>
+                                onClick={hanldeClick(rowIndex,colIndex)}></div>
                             )
                         })
                     }
