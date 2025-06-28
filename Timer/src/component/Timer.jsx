@@ -39,6 +39,7 @@ export const Timer = () => {
             setConfig(newConfig)
         }
     }
+    
     function handleStart(){
         let totalTimeInMiliSeconds=0;
         OrderOfTime.forEach(key=>{
@@ -70,11 +71,13 @@ export const Timer = () => {
             }
         },10)
     } 
+
     function handlePause()
     {
         clearInterval(intervalRef.current)
         intervalRef.current=null
     }
+
     function handleReset(){
         clearInterval(intervalRef)
         intervalRef.current=null
@@ -82,10 +85,12 @@ export const Timer = () => {
         timeSpentRef.current=0
         setConfig(structuredClone(Config))
     }
+
     function startAgain(){
         setTimeOver(false)
         handleReset()
     }
+
     function formatedTime(){
         const ms=Math.floor((time%1000)/10)
         const mm=Math.floor((time/(60*1000))%60)
