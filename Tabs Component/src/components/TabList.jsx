@@ -18,5 +18,5 @@ export const TabList = ({tabs}) => {
                     <activeComponent.Component/>
                 }
         </>
-  )
+    )
 }
