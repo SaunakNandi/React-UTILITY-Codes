@@ -54,24 +54,60 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.traffic-light{
+.memory-game{
+  display:flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100vh;
+  flex-wrap: wrap;
+  width: 70vw;
+}
+
+.card{
+  height: 120px;
+  width: 160px;
+  border-radius: 4px;
+  background-color: antiquewhite;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  height: 45vh;
-  padding: 1vw;
-  width: 20vw;
-  border: 1px solid purple
+  margin: 4px;
+  position: relative;
+  transition: transform 0.1s;
+  transform-style: preserve-3d; /*used to control how nested (child) elements are rendered in 3D space when the parent element is transformed*/
 }
 
-.light{
-  height: 10vw;
-  width: 10vw;
-  border-radius: 999999px;
+.front{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: lightcoral;
+  cursor: pointer;
+  z-index: 1;
+  backface-visibility: hidden; /*used to hide the back side of an element when it is rotated in 3D space */
+}
+.back{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: lightgoldenrodyellow;
+  font-size: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.card[data-toggle="true"]{
+  transform: rotateY(180deg);
+}
+.card[data-active="true"]{
+  transform: rotateY(180deg);
+}
+.card[data-disabled="true"],.card[data-disable-all="true"]{
+  pointer-events: none;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

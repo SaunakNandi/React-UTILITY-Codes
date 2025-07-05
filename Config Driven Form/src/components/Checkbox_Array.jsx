@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Checkbox = ({label,id,error,readOnly,name,value,checked,disabled,onChange,index,categoryKey}) => {
+const Checkbox_Array = ({label,id,error,readOnly,name,value,checked,disabled,onChange,index}) => {
     function handleChange()
     {
-        onChange({id,index,value,checked:!checked,type:'checkbox',categoryKey})
+        onChange({id,index,value,checked:!checked,type:'checkbox'})
     }
     
   return (

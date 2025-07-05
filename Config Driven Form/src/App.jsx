@@ -1,8 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from 'react' 
 import './App.css'
-import { FormWrapper } from './components/FormWrapper'
+import { FormWrapper_Array } from './components/FormWrapper_Array'
 
 const Inputs={
   personal_details:{
@@ -70,17 +68,17 @@ const Inputs={
 function App() {
   const [inputs, setInputs] = useState(structuredClone(Inputs))
   
-  function onInputChange({id,index,value,checked,type}){
-    // console.log(id,index,value,checked)
+  function onInputChange({id,index,value,checked,type,categoryKey}){
     const oldState=structuredClone(inputs)
+    console.log(oldState[categoryKey].inputs,categoryKey,index)
     if(type=='checkbox')
-      oldState[index].checked=checked
+      oldState[categoryKey].inputs[index].checked=checked
     else
-      oldState[index].value=value
+      oldState[categoryKey].inputs[index].value=value
     setInputs(oldState)
   }
 
-  function onInputBlur({id,index,value,checked,type})
+  function onInputBlur({id,index,value,checked,type,categoryKey})
   {
     const oldState=structuredClone(inputs)
     // console.log(value)
@@ -88,7 +86,7 @@ function App() {
     {
       if(value.length<3)
       {
-        oldState[index].error=`Invalid Field ${oldState[index].label}`
+        oldState[categoryKey].inputs[index].error=`Invalid Field ${oldState[categoryKey].inputs[index].label}`
       }
       else
         oldState[index].error=""
@@ -102,35 +100,37 @@ function App() {
 
   function handleSubmit(){
     const param={}
-    inputs.forEach((input)=>{
-      if(input.type=='checkbox')
-      {
-        if(input.checked) 
+    Object.keys(inputs).forEach((key)=>{
+      inputs[key].inputs.forEach((input)=>{
+        if(input.type=='checkbox')
+        {
+          if(input.checked) 
+            param[input.name]=input.value
+        }
+        else
           param[input.name]=input.value
-      }
-      else
-        param[input.name]=input.value
+      })
     })
     console.log("param ",param)
   }
 
   function needToDisableSubmit(){
     let disable=false;
-    for(let input of inputs)
-    {
-      if(input.required && !input.value)
-      {
-        disable=true;
-        break
-      }
-    }
+    // for(let input of inputs)
+    // {
+    //   if(input.required && !input.value)
+    //   {
+    //     disable=true;
+    //     break
+    //   }
+    // }
     // disable=inputs.some(input=>!input.value)
     return disable
   }
   const disableSubmit=needToDisableSubmit(inputs)
   return (
     <>
-      <FormWrapper inputs={inputs} onInputChange={onInputChange} onInputBlur={onInputBlur} onCancel={handleCancel} onSubmit={handleSubmit} disableSubmit={disableSubmit}/>
+      <FormWrapper_Array inputs={inputs} onInputChange={onInputChange} onInputBlur={onInputBlur} onCancel={handleCancel} onSubmit={handleSubmit} disableSubmit={disableSubmit}/>
     </>
   )
 }
