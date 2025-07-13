@@ -21,6 +21,7 @@ function AppNew() {
     }
     const res=await fetch(`https://dummyjson.com/products?limit=20&skip=${page*10-10}`)
     const data=await res.json()
+    console.log(data)
     if(data && data.products)
     {
       setProducts(data.products)
@@ -69,7 +70,7 @@ function AppNew() {
                     {i+1}
                   </span>
                 ))
-              }
+              }           
               <span onClick={()=>selectPage(page+1)}
                 className={page<totalPages ? "":"pagination__disable"}>➡️</span>
             </div>
