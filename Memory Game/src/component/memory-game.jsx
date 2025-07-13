@@ -10,7 +10,7 @@ function MemoryGame(){
     const [matchingIndices,setMatchingIndices]=useState([])
     function prepareCards(){
         const duplicatedCards=[...data,...data]
-        for(let i=duplicatedCards.length;i>=0;i--)
+        for(let i=duplicatedCards.length-1;i>=0;i--)
         {
             const j=Math.floor(Math.random()*i);
             [duplicatedCards[i],duplicatedCards[j]]=[duplicatedCards[j],duplicatedCards[i]]
