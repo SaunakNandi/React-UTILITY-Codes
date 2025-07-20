@@ -6,19 +6,6 @@ export function Folder({handleInsertNode,explorer}){
     const {tabId,setTabId,showInput,setShowInput}=useContext(ExplorerContext)
     const [colorActive,setColorActive] = useState(false)
     const [expand,setExpand]=useState(false)
-    // const [showInput,setShowInput]=useState({
-    //     visible: false,
-    //     isFolder:null
-    // })
-    // stops event bubbling
-    // const handleNewFolder=(e,isFolder)=>{
-    //     e.stopPropagation()
-    //     setExpand(true)
-    //     setShowInput({
-    //         visible: true,
-    //         isFolder
-    //     })
-    // }
 
     const onAddFolder=(e)=>{
         // 13 is the keyCode of 'Enter'
@@ -40,10 +27,6 @@ export function Folder({handleInsertNode,explorer}){
                     <div className="folder" onClick={(e)=>{e.stopPropagation(); setExpand(!expand); setTabId(explorer.id)}}
                         style={{backgroundColor: explorer.id===tabId?'gray':'lightgray'}}>
                         <span>📁{explorer.name}</span>
-                        {/* <div>
-                            <button onClick={(e)=>handleNewFolder(e,true)}>Folder ➕</button>
-                            <button onClick={(e)=>handleNewFolder(e,false)}>File ➕</button>
-                        </div> */}
                     </div>
                     <div style={{display: (expand || (tabId==explorer.id && showInput.visible))?"block":"none",paddingLeft:25}} >
                   

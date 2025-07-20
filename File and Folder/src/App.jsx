@@ -11,7 +11,7 @@ function App() {
     const finalTree=insertNode(explorerData,folderId,value,isFolder)
     setExplorerData(finalTree)
   }
-  const {setShowInput}=useContext(ExplorerContext)
+  const {tabId,setTabId,setShowInput}=useContext(ExplorerContext)
   const handleNewFolder=(e,isFolder)=>{
     e.stopPropagation()
     // setExpand(true)
@@ -19,6 +19,9 @@ function App() {
         visible: true,
         isFolder
     })
+    if(tabId==-1 || tabId==1)
+      setTabId(1)
+    console.log(tabId)
   }
 
   return (
@@ -27,9 +30,8 @@ function App() {
           <div>
             <button onClick={(e) => handleNewFolder(e, true)}>Folder ➕</button>
             <button onClick={(e) => handleNewFolder(e, false)}>File ➕</button>
-          </div>
-          <Folder explorer={explorerData} handleInsertNode={handleInsertNode}/>
-    
+          </div> 
+          <Folder explorer={explorerData} handleInsertNode={handleInsertNode}/>  
       </div>
     </>
   )

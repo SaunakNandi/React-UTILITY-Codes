@@ -41,7 +41,7 @@ const DigitalClock = () => {
     }
   return (
     <>
-        <div>{date.toLocaleTimeString()}</div>
+        {/* <div>{date.toLocaleTimeString()}</div> */}
         <div>{getDate()}</div>
     </>
   )

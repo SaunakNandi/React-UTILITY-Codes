@@ -81,7 +81,6 @@ function App() {
   function onInputBlur({id,index,value,checked,type,categoryKey})
   {
     const oldState=structuredClone(inputs)
-    // console.log(value)
     if(type=='text')
     {
       if(value.length<3)

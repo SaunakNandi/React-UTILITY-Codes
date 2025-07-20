@@ -20,6 +20,7 @@ function App() {
   }
   function handleKeyDown(e)
   {
+    console.log("Active user ",activeSuggestion)
     if(e.key==='Backspace' && e.target.value==='' && selectedUsers.length > 0)
     {
       const lastUser=selectedUsers[selectedUsers.length-1]
@@ -30,11 +31,12 @@ function App() {
     {
       if(activeSuggestion<suggestions.users?.length-1)
         setactiveSuggestion(activeSuggestion+1)
-      else
+      else 
         setactiveSuggestion(0)
     }
     else if(e.key==='ArrowUp' && suggestions?.users?.length>0)
     {
+       e.preventDefault()
       if(activeSuggestion>0)
         setactiveSuggestion(activeSuggestion-1)
       else
