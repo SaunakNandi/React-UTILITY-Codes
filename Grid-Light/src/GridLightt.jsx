@@ -9,6 +9,7 @@ const config=[
 export function GridLight(){
     const [stack,setStack]=useState(new Map())  // to store the lights in order of insertion
     function hanldeClick(rowIndex,colIndex){
+        console.log("Clicked")
         return ()=>{
             const newStack=structuredClone(stack)
             const key=`${rowIndex}-${colIndex}`

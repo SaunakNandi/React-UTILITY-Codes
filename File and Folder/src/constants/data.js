@@ -19,7 +19,7 @@ export const explorer={
                             isFolder:true,
                             items:[
                                 {
-                                    id:'4',
+                                    id:'8',
                                     name:"index.html",
                                     isFolder:false,
                                     items:[]

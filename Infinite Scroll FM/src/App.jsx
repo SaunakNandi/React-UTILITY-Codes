@@ -5,8 +5,6 @@ import './App.css'
 import InfiniteScrollDomApi from './InfiniteScrollDomApi'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <InfiniteScrollDomApi/>

@@ -12,7 +12,6 @@ const Stopwatch = ({handleAdd}) => {
         intervalRef.current=setInterval(()=>{
             setTime(new Date().getTime()-stopwatchRef.current)
         },10)
-
     }
     function handlePause()
     {
@@ -40,12 +39,14 @@ const Stopwatch = ({handleAdd}) => {
 
     function handleBlur()
     {
+        console.log("Blur")
         needToResumeRef.current=!!intervalRef.current;
         clearInterval(intervalRef.current)
     }
 
     function handleFocus()
     {
+        console.log("Focus")
         if(needToResumeRef.current)
         {
             needToResumeRef.current=false
@@ -68,7 +69,7 @@ const Stopwatch = ({handleAdd}) => {
                 <button onClick={handleStart}>Start</button>
                 <button onClick={handlePause}>Pause</button>
                 <button onClick={handleReset}>Reset</button>
-                <button onClick={handleAdd}>ADD</button>
+                <button onClick={handleAdd}>ADD Another Timer</button>
             </div>
         </div>
     )

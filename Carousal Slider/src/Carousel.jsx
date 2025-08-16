@@ -40,12 +40,11 @@ const Carousel = ({children}) => {
         clearInterval(intervalRef.current);
         const {slides,count}=getSlidesInfo()
         intervalRef.current=setInterval(()=>{
-        setCurrentInd((prev)=>{
-            const newIndx=prev==count-1? 0:prev+1;   
-            HandleCarouselMovement(slides,prev,newIndx,true)       
-            // console.log(newIndx)
-            return newIndx
-        })
+            setCurrentInd((prev)=>{
+                const newIndx=prev==count-1? 0:prev+1;   
+                HandleCarouselMovement(slides,prev,newIndx,true)   
+                return newIndx
+            })
         },3000)
     }
     function getSlidesInfo(){
@@ -60,27 +59,21 @@ const Carousel = ({children}) => {
         const {slides,count}=getSlidesInfo()
         const newIndx=currentInd==0? count-1:currentInd-1;
         HandleCarouselMovement(slides,currentInd,newIndx)
-        startSlider()
         setCurrentInd(newIndx)
+        startSlider()
     }
     function handleNext(){
         clearInterval(intervalRef.current)
         const {slides,count}=getSlidesInfo()
         const newIndx=currentInd==count-1? 0:currentInd+1;  
-        HandleCarouselMovement(slides,currentInd,newIndx,true)    
-
-        startSlider()
+        HandleCarouselMovement(slides,currentInd,newIndx,true)
         setCurrentInd(newIndx)
+        startSlider()
     }
     function handleStepperClick(newIndx){
         return ()=>{
             clearInterval(intervalRef.current);
             const {slides}=getSlidesInfo();
-            // [...slides].forEach((element,i) => {
-            //     // set 'data-active' to current active element
-            //     element.setAttribute("data-active",i==newIndx)
-            // });
-            // console.log(newIndx,currentInd)
             if(newIndx<currentInd)
             {
                 slides[currentInd].classList.remove('show','showL')

@@ -2,23 +2,9 @@ import { useContext, useState } from "react"
 import { ExplorerContext } from "../context/Explorer"
 
 export function Folder({handleInsertNode,explorer}){
-    // console.log(explorer)
     const {tabId,setTabId,showInput,setShowInput}=useContext(ExplorerContext)
     const [colorActive,setColorActive] = useState(false)
     const [expand,setExpand]=useState(false)
-    // const [showInput,setShowInput]=useState({
-    //     visible: false,
-    //     isFolder:null
-    // })
-    // stops event bubbling
-    // const handleNewFolder=(e,isFolder)=>{
-    //     e.stopPropagation()
-    //     setExpand(true)
-    //     setShowInput({
-    //         visible: true,
-    //         isFolder
-    //     })
-    // }
 
     const onAddFolder=(e)=>{
         // 13 is the keyCode of 'Enter'
@@ -33,38 +19,34 @@ export function Folder({handleInsertNode,explorer}){
     }
     console.log(tabId,explorer.id,expand)
     if(explorer.isFolder)
-        {
-            return (
-                <div style={{marginTop:5}}>
-                <div>
-                    <div className="folder" onClick={(e)=>{e.stopPropagation(); setExpand(!expand); setTabId(explorer.id)}}
-                        style={{backgroundColor: explorer.id===tabId?'gray':'lightgray'}}>
-                        <span>📁{explorer.name}</span>
-                        {/* <div>
-                            <button onClick={(e)=>handleNewFolder(e,true)}>Folder ➕</button>
-                            <button onClick={(e)=>handleNewFolder(e,false)}>File ➕</button>
-                        </div> */}
-                    </div>
-                    <div style={{display: (expand || (tabId==explorer.id && showInput.visible))?"block":"none",paddingLeft:25}} >
-                  
-                        {
-                            tabId==explorer.id && showInput.visible && (
-                                <div style={{display:'flex'}}>
-                                    <span>{showInput.isFolder?"📁" : "📄"}</span>
-                                    <input type="text" className="inputContainer__input"
-                                    onKeyDown={onAddFolder} autoFocus
-                                    onBlur={()=>setShowInput({...showInput,visible:false})}/>
-                                </div>
-                            )
-                        }
-                        {
-                            explorer.items.map((exp)=>(
-                                <Folder handleInsertNode={handleInsertNode} explorer={exp} key={exp.id}/>
-                            ))
-                        }
-                    </div>
+    {
+        return (
+            <div style={{marginTop:5}}>
+            <div>
+                <div className="folder" onClick={(e)=>{e.stopPropagation(); setExpand(!expand); setTabId(explorer.id)}}
+                    style={{backgroundColor: explorer.id===tabId?'gray':'lightgray'}}>
+                    <span>📁{explorer.name}</span>
                 </div>
-            </div>)
+                <div style={{display: (expand || (tabId==explorer.id && showInput.visible))?"block":"none",paddingLeft:25}} >
+                    {
+                        tabId==explorer.id && showInput.visible && (
+                            <div style={{display:'flex'}}>
+                                <span>{showInput.isFolder?"📁" : "📄"}</span>
+                                <input type="text" className="inputContainer__input"
+                                onKeyDown={onAddFolder} autoFocus
+                                onBlur={()=>setShowInput({...showInput,visible:false})}/>
+                            </div>
+                        )
+                    }
+                    {/*  recurssion */}
+                    {
+                        explorer.items.map((exp)=>(
+                            <Folder handleInsertNode={handleInsertNode} explorer={exp} key={exp.id}/>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>)
     }
     else
     {

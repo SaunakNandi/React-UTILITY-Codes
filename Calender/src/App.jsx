@@ -5,8 +5,6 @@ import './App.css'
 import { DayView } from './components/DayView'
 
 function App() {
-  const [count, setCount] = useState(0)
-  
   return (
     <>
       <DayView/>

@@ -6,26 +6,36 @@ const CommentBox = ({comment}) => {
     const {allComments,deleteComment}=useContext(CommentSection)
 
     const [showReply,setShowReply]=useState(false)
-
+    const [reply,setReply]=useState(false)
   return (
     <div className='comment-container'>
         <div className="comment-header">
             <p className='comment-value'>{comment.value}</p>
             <div className="comment-actions">
-                <button className="reply-btn" onClick={()=>setShowReply(prev=>!prev)}>
-                    { showReply? 'Cancel' : 'Reply'}
+                <button className="reply-btn" onClick={()=>setReply(prev=>!prev)}>
+                    { reply? 'Cancel' : 'Reply'}
                 </button>
                 <button className="delete-btn" onClick={()=>deleteComment(comment.id)}>Delete</button>
             </div>
+            <div onClick={()=>setShowReply(prev=>!prev)}>
+                {
+                    showReply? <p>Show all replies</p>:<p>Hide Replies</p>
+                }
+            </div>
         </div>
-        {showReply && <ReplyComment setShowReply={setShowReply} id={comment.id}/>}
-        <div className="nested-comments">
-            {
-                comment.children.map((childId)=>{
-                    return <CommentBox comment={allComments[childId]} key={childId} />
-                })
-            }
-        </div>
+        {reply && <ReplyComment setShowReply={setReply} id={comment.id}/>}
+
+        {
+            showReply && (
+                <div className="nested-comments">
+                    {
+                        comment.children.map((childId)=>{
+                            return <CommentBox comment={allComments[childId]} key={childId} />
+                        })
+                    }
+                </div>
+            )
+        }
     </div>
   )
 }

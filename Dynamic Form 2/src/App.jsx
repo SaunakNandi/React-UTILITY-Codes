@@ -137,19 +137,6 @@ function App() {
     console.log(params)
   }
 
-  // function needToDisableSubmit(){
-  //   let disable=false
-  //   for(let input of inputs)
-  //   {
-  //     if(input.required  && !input.value)
-  //     {
-  //       disable=true
-  //       break
-  //     }
-  //   }
-  //   return disable
-  // } 
-  // const disableSubmit=needToDisableSubmit(inputs)
   return (
     <>
       <FormWrapper onInputChange={onInputChange} inputs={inputs}
