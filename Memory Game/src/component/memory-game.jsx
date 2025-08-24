@@ -12,8 +12,8 @@ function MemoryGame(){
         const duplicatedCards=[...data,...data]
         for(let i=duplicatedCards.length-1;i>=0;i--)
         {
-            const j=Math.floor(Math.random()*i);
-            [duplicatedCards[i],duplicatedCards[j]]=[duplicatedCards[j],duplicatedCards[i]]
+            j=Math.floor(Math.random()*i);
+            [duplicatedCards[i],duplicatedCards[j]]=[duplicatedCards[j],duplicatedCards[i]];
         }
         return duplicatedCards
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 const StarRating = ({starCount=5}) => {
-    const [starValue,setStarValue]=useState()
+    const [starValue,setStarValue]=useState(-1)
     const [hover,setHover]=useState(0)
   return (
     <div className="container">
