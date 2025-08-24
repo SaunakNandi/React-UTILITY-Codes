@@ -1,0 +1,26 @@
+export const data=[
+    {
+        id:1,
+        label:"Badminton",
+        count:1,
+        percentage:5
+    },
+    {
+        id:2,
+        label:"Football",
+        count:5,
+        percentage:25
+    },
+    {
+        id:3,
+        label:"Boxing",
+        count:3,
+        percentage:15
+    },
+    {
+        id:4,
+        label:"Cricket",
+        count:3,
+        percentage:15
+    }
+]

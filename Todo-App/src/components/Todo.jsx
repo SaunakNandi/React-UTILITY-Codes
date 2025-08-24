@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 
 export default function Todo(){
     const [task,setTask]=useState("")
-    const [todos,setTodos]=useState( JSON.parse(localStorage.getItem('todos')) || [])
+    const savedTodo=localStorage.getItem('todos')
+    const [todos,setTodos]=useState(savedTodo?JSON.parse(savedTodo) : [])
 
     const handleChange=(e)=>{
         setTask(e.target.value)
@@ -34,7 +35,7 @@ export default function Todo(){
         setTodos(exisiting_todo)
     }
 
-    const handleKeyDown=()=>{
+    const handleKeyDown=(e)=>{
         if(e.key=="Enter")
         {    
             setTask('')
