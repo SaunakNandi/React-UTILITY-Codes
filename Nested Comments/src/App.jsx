@@ -6,9 +6,7 @@ function App() {
   const {allComments}=useContext(CommentSection)
   return (
     <>
- 
-        <CommentBox comment={allComments[1]}/>
-
+      <CommentBox comment={allComments[1]}/>
     </>
   )
 }

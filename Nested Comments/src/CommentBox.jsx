@@ -23,8 +23,8 @@ const CommentBox = ({comment}) => {
                 }
             </div>
         </div>
-        {reply && <ReplyComment setShowReply={setReply} id={comment.id}/>}
-
+        {
+        reply && <ReplyComment setShowReply={setReply} id={comment.id}/>}
         {
             showReply && (
                 <div className="nested-comments">
