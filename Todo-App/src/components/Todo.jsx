@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import Item from "./Item"
 
 export default function Todo(){
     const [task,setTask]=useState("")
@@ -14,26 +15,30 @@ export default function Todo(){
             return {...todo}
         })
         exisiting_todo.push({
-            value:task,
+            value:task.trim(),
             isCompleted:false,
             id:new Date().getTime()
         })
         setTodos(exisiting_todo)
     }
 
-    function handleComplete(id)
-    {
+    // Your callback doesn’t include todos in the dependency array ([]).
+
+    // This means the function closes over the initial todos value (usually an empty array) and never sees updates. So every time you toggle, it works on stale data.    
+
+    const handleComplete=useCallback((id)=>{
         setTask('')
-        const exisiting_todo=todos.map((todo)=>{
-            if(todo.id==id)
-            {
-                return {...todo,isCompleted:!todo.isCompleted}
-            }
-            return {...todo}
+        setTodos((prev)=>{
+            const exisiting_todo=prev.map((todo)=>{
+                if(todo.id==id)
+                {
+                    return {...todo,isCompleted:!todo.isCompleted}
+                }
+                return {...todo}
+            })
+            return exisiting_todo
         })
-        
-        setTodos(exisiting_todo)
-    }
+    },[])
 
     const handleKeyDown=(e)=>{
         if(e.key=="Enter")
@@ -43,10 +48,28 @@ export default function Todo(){
         }
     }
 
-    const handleDelete=(id)=>{
-        const updatedTodo=todos.filter((item)=>item.id!=id)
-        setTodos(updatedTodo)
-    }
+    const handleUpdate=useCallback((id,updatedValue)=>{
+        setTodos((prev)=>{
+            const updated_todo=prev.map((todo)=>{
+                if(todo.id==id)
+                {
+                    return {
+                        ...todo,
+                        value:updatedValue.trim()
+                    }
+                }
+                return {...todo}
+            })
+            return updated_todo
+        })
+    })
+
+    const handleDelete=useCallback((id)=>{
+        setTodos((prev)=>{
+            const updatedTodo=prev.filter((item)=>item.id!=id)
+            return updatedTodo
+        })
+    },[])
 
     useEffect(()=>{
         localStorage.setItem('todos',JSON.stringify(todos))
@@ -60,12 +83,7 @@ export default function Todo(){
         <div className="">
             {
                 todos.map((todo)=>(
-                    <div className="">
-                        <span style={{textDecoration:`${todo.isCompleted?'line-through':'none'}`}}>{todo.value}</span>
-                        <span style={{marginRight:'0.5rem'}} 
-                        onClick={()=>handleComplete(todo.id)}>✔️</span>
-                        <span onClick={()=>handleDelete(todo.id)}>❌ </span>
-                    </div>
+                    <Item key={todo.id} handleComplete={handleComplete} handleDelete={handleDelete} todo={todo} handleUpdate={handleUpdate}/>
                 ))
             }
         </div>
