@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+.main{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.left,.right{
+  width: 20vw;
+  height: fit-content;
+  border: 1px solid black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: start;
+}
+
+.left label,.right label{
+  display: flex;
+  gap: 10px;
+}
+
+.control-panel{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 20vh;
+
+}
