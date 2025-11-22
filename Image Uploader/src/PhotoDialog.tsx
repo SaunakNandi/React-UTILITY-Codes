@@ -49,7 +49,7 @@ function PhotoDialog({ setImage }: PhotoDialog) {
   }
   return (
     <Dialog>
-  <DialogTrigger>
+  <DialogTrigger asChild={false}>
     <Button>Update Image</Button>
   </DialogTrigger>
 
