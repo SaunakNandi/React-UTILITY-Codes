@@ -1,0 +1,54 @@
+{
+  "title": "Config Driven Form",
+  "fields": [
+    {
+      "label": "Full Name",
+      "name": "name",
+      "type": "text",
+      "required": "true"
+    },
+    {
+      "label": "Email",
+      "name": "email",
+      "type": "email",
+      "required": "true"
+    },
+    {
+      "label": "Role",
+      "name": "role",
+      "type": "select",
+      "option": ["Manager", "Tech Lead", "Developer", "Designer"],
+      "required": "true"
+    },
+    {
+      "label": "Experience",
+      "name": "exp",
+      "type": "number",
+      "min": 0,
+      "max": 30,
+      "required": "true"
+    },
+    {
+      "label": "Work shift",
+      "name": "shift",
+      "type": "radio",
+      "option": ["morning", "afternoon", "night"]
+    },
+    {
+      "label": "Skills",
+      "name": "skill",
+      "type": "checkbox",
+      "option": [
+        "Excel",
+        "JIRA",
+        "JS",
+        "JAVA",
+        "SQL",
+        "Figma",
+        "Zeplin",
+        "SonarQube",
+        "Jenkins"
+      ]
+    }
+  ]
+}

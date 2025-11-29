@@ -13,7 +13,7 @@ function App() {
       <button onClick={() => toggle('hello')}>Toggle hello</button>
       <button onClick={() => reset()}>Reset</button>
       <button onClick={() => clear()}>Clear</button>
-      <pre>{JSON.stringify(Array.from(set), null, 2)}</pre>
+      <pre>{JSON.stringify(Array.from(set ?? []), null, 2)}</pre>
     </div>
   );
 }
