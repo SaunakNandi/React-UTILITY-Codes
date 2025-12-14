@@ -1,4 +1,5 @@
-.carousel,.box{
+.carousel,
+.box {
   width: 80vw;
   min-width: 200px;
   height: 60vh;
@@ -8,19 +9,19 @@
   position: relative;
 }
 
-.box{
+.box {
   margin-left: 40px;
   margin-top: 40px;
   position: relative;
   overflow: hidden;
 }
-.box img[data-active="true"]{
+.box img[data-active="true"] {
   opacity: 1;
 }
-.box img[data-active="false"]{
+.box img[data-active="false"] {
   opacity: 0;
 }
-.app img{
+.app img {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -34,36 +35,38 @@
   transition: opacity 0.6s linear;
 }
 
-.next,.prev{
+.next,
+.prev {
   position: absolute;
   height: 80px;
   width: 80px;
   border-radius: 50%;
   z-index: 99;
 }
-.next{
+.next {
   top: 50%;
   right: -65px;
 }
-.prev{
+.prev {
   top: 50%;
-
 }
 
-.show,.showL{
+.show,
+.showL {
   animation: showAnimation 1s ease-in-out forwards;
   z-index: 3;
   opacity: 1 !important;
 }
-.showL{
+.showL {
   animation: showAnimationLeft 1s ease-in-out forwards !important;
 }
-.hide,.hideL{
+.hide,
+.hideL {
   animation: hideAnimation 1s ease-in-out forwards;
-  z-index: 2;  
+  z-index: 2;
   opacity: 0;
 }
-.hideL{
+.hideL {
   animation: hideAnimationLeft 1s ease-in-out forwards;
 }
 
@@ -71,7 +74,7 @@
   from {
     transform: translateX(100%);
   }
-  to{
+  to {
     transform: translateX(0);
   }
 }
@@ -79,23 +82,23 @@
   from {
     transform: translateX(-100%);
   }
-  to{
+  to {
     transform: translateX(0);
   }
 }
 @keyframes hideAnimation {
-  from{
+  from {
     transform: translateX(0);
   }
-  to{
+  to {
     transform: translateX(-100%);
   }
 }
 @keyframes hideAnimationLeft {
-  from{
+  from {
     transform: translateX(0);
   }
-  to{
+  to {
     transform: translateX(100%);
   }
 }

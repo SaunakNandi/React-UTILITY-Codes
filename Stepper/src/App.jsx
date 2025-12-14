@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import { CheckoutStepper } from './components/CheckoutStepper'
-import { CHECKOUT_STEPS } from './constants/constant'
-import './App.css'
-import Checkout from './components/Checkout'
+import { useState } from "react";
+import { CheckoutStepper } from "./components/CheckoutStepper";
+import { CHECKOUT_STEPS } from "./constants/constant";
+import "./App.css";
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
       <CheckoutStepper steps={CHECKOUT_STEPS}></CheckoutStepper>
       {/* <Checkout steps={CHECKOUT_STEPS}/> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
