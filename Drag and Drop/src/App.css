@@ -1,0 +1,72 @@
+body {
+  background-color: rgb(29, 27, 27);
+  color: red;
+}
+.ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+div .title {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div .title h1 {
+  font-size: 5rem;
+  color: white;
+  font-weight: 700;
+}
+
+.drag-drop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100vw;
+  padding: 2rem;
+}
+.drag-drop-ctn {
+  width: 25rem;
+  height: 30rem;
+  background-color: whitesmoke;
+  border-radius: 2rem;
+}
+.dd-title-ctn {
+  display: flex;
+  justify-content: center;
+  background-color: aliceblue;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 12px 0 rgba(0, 0, 0, 0.19);
+  /* border-radius: 2rem; */
+}
+.dd-title-ctn h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+.dd-items-ctn {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-direction: column;
+  padding: 1rem 1rem;
+  gap: 0.5rem;
+}
+.dd-item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  background-color: azure;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 12px 0 rgba(0, 0, 0, 0.19);
+  height: 2rem;
+}
+.dd-item h4 {
+  font-size: 1rem;
+  font-weight: 400;
+}
