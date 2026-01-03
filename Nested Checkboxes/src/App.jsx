@@ -1,67 +1,82 @@
 import { useState } from "react";
 import "./App.css";
-import { checkboxesData } from "./data";
-
-const Checkbox = ({ data, checked, setChecked }) => {
-  function handleChange(value, node) {
-    setChecked((prev) => {
-      const newState = { ...prev, [node.id]: value };
-      const updateChildren = (item) => {
-        item.children.forEach((child) => {
-          newState[child.id] = value;
-          child.children && updateChildren(child);
-        });
-      };
-
-      updateChildren(node);
-      console.log("before", { ...newState });
-      const verifyChecked = (item) => {
-        console.log("item ", item.children);
-        if (item?.children?.length == 0) return newState[item.id] || false;
-        const allChildrenChecked = item.children.every((child) =>
-          verifyChecked(child)
-        );
-        newState[item.id] = allChildrenChecked;
-        return allChildrenChecked;
-      };
-      checkboxesData.forEach((x) => verifyChecked(x));
-      console.log("after ", newState);
-      return newState;
-    });
-  }
-  return (
-    <div className="">
-      {data.map((node) => (
-        <div className="parent" key={node.id}>
-          <input
-            type="checkbox"
-            checked={checked[node.id] || false}
-            onChange={(e) => handleChange(e.target.checked, node)}
-          />
-          <span>{node.name}</span>
-          {node.children && node.children.length > 0 && (
-            <Checkbox
-              data={node.children}
-              checked={checked}
-              setChecked={setChecked}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
+import { checkboxList } from "./data";
+import Comments from "./Comments";
 
 function App() {
-  const [checked, setChecked] = useState({});
+  const [data, setData] = useState(checkboxList);
+  function toggleCheckBox(children, value) {
+    for (let i = 0; i < children.length; i++) {
+      children[i].checked = value;
+      toggleCheckBox(children[i].children, value);
+    }
+    console.log("toggleChecked ", children);
+  }
+
+  function dfs(comment, id, value, isFound) {
+    if (comment.length == 0) return isFound;
+    for (let i = 0; i < comment.length; i++) {
+      if (comment[i].id == id) {
+        comment[i].checked = value;
+        toggleCheckBox(comment[i].children, value);
+        return true;
+      }
+      isFound = dfs(comment[i].children, id, value, isFound);
+      if (isFound) return true;
+    }
+    return isFound;
+  }
+  function getCount(list) {
+    if (list.length == 0) return 0;
+    let count = 0;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].checked) count += 1;
+      if (list[i].children.length == 0) continue;
+      let childCount = getCount(list[i].children); // return number of children which are checked
+      if (childCount != list[i].children.length) {
+        count = list[i].checked ? count - 1 : count;
+        list[i].checked = false;
+      } else {
+        count = list[i].checked ? count : count + 1;
+        list[i].checked = true;
+      }
+    }
+    return count;
+  }
+  function handleChange(id, value) {
+    console.log(id, value);
+    const comment = structuredClone(data);
+    let isFound = false;
+    let parentId = -1;
+    for (let i = 0; i < comment.length; i++) {
+      if (comment[i].id == id) {
+        isFound = true;
+        parentId = i;
+        console.log("children ", comment[i].children);
+
+        toggleCheckBox(comment[i].children, value);
+        console.log("comments ", comment);
+        break;
+      }
+
+      isFound = dfs(comment[i].children, id, value, false);
+      if (isFound) {
+        parentId = i;
+        break;
+      }
+    }
+    const count = getCount(comment[parentId].children);
+    if (comment[parentId].children.length > 0) {
+      if (count == comment[parentId].children.length)
+        comment[parentId].checked = true;
+      else comment[parentId].checked = false;
+    }
+    setData(comment);
+  }
   return (
-    <div className="App">
-      <Checkbox
-        data={checkboxesData}
-        checked={checked}
-        setChecked={setChecked}
-      />
-    </div>
+    <>
+      <Comments data={data} handleChange={handleChange} />
+    </>
   );
 }
 

@@ -1,67 +1,110 @@
-export const checkboxesData = [
+export const checkboxList = [
   {
+    label: "p1",
     id: 1,
-    name: "A",
+    checked: false,
     children: [
       {
-        id: 11,
-        name: "AB1",
+        label: "p1-c1",
+        id: 2,
+        checked: false,
         children: [
           {
-            id: 111,
-            name: "ABC111",
-            children: [
-              {
-                id: 1111,
-                name: "ABC1111",
-                children: [],
-              },
-              {
-                id: 1112,
-                name: "ABC1112",
-                children: [],
-              },
-            ],
-          },
-          {
-            id: 112,
-            name: "ABC112",
-            children: [
-              {
-                id: 1121,
-                name: "ABC1121",
-                children: [],
-              },
-              {
-                id: 1122,
-                name: "ABC1122",
-                children: [],
-              },
-            ],
-          },
-          {
-            id: 113,
-            name: "ABC113",
+            label: "p1-c1-c1",
+            id: 3,
+            checked: false,
             children: [],
           },
           {
-            id: 114,
-            name: "ABC114",
-            children: [],
+            label: "p1-c1-c2",
+            id: 4,
+            checked: false,
+            children: [
+              {
+                label: "p1-c1-c2-c1",
+                id: 5,
+                checked: false,
+                children: [],
+              },
+              {
+                label: "p1-c1-c2-c2",
+                id: 6,
+                checked: false,
+                children: [
+                  {
+                    label: "p1-c1-c2-c2-c1",
+                    id: 7,
+                    checked: false,
+                    children: [],
+                  },
+                  {
+                    label: "p1-c1-c2-c2-c2",
+                    id: 8,
+                    checked: false,
+                    children: [],
+                  },
+                ],
+              },
+              {
+                label: "p1-c1-c2-c3",
+                id: 9,
+                checked: false,
+                children: [],
+              },
+            ],
           },
         ],
+      },
+      {
+        label: "p1-c2",
+        id: 10,
+        checked: false,
+        children: [],
+      },
+      {
+        label: "p1-c3",
+        id: 11,
+        checked: false,
+        children: [],
       },
     ],
   },
   {
-    id: 2,
-    name: "B",
+    label: "p2",
+    id: 12,
+    checked: false,
     children: [
       {
-        id: 21,
-        name: "B1",
+        label: "p2-c1",
+        id: 13,
+        checked: false,
+        children: [],
+      },
+      {
+        label: "p2-c2",
+        id: 14,
+        checked: false,
         children: [],
       },
     ],
+  },
+  {
+    label: "p3",
+    id: 15,
+    checked: false,
+    children: [
+      {
+        label: "p3-c1",
+        id: 16,
+        checked: false,
+        children: [],
+      },
+    ],
+  },
+  {
+    label: "p4",
+    id: 17,
+    checked: false,
+    children: [],
   },
 ];
