@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 
-const jobsDetails = () => {
+const JobsDetails = () => {
   const { register, watch } = useFormContext();
   const isWorking = watch("working");
   return (
@@ -24,4 +24,4 @@ const jobsDetails = () => {
   );
 };
 
-export default jobsDetails;
+export default JobsDetails;

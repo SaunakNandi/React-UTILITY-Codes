@@ -1,6 +1,6 @@
-import { useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-export const personalInfo = () => {
+export const PersonalInfo = () => {
   const {
     register,
     formState: { errors },
@@ -18,7 +18,9 @@ export const personalInfo = () => {
           },
         })}
       />
-      {errors.name && <p>{errors.name.message}</p>}
+      {errors.name && errors.name.message.length > 0 && (
+        <p>{errors.name.message}</p>
+      )}
 
       <label htmlFor="">Role</label>
       <select {...register("role")}>

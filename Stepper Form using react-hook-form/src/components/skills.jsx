@@ -1,6 +1,6 @@
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-const skills = () => {
+const Skills = () => {
   const { control, register } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -31,4 +31,4 @@ const skills = () => {
   );
 };
 
-export default skills;
+export default Skills;

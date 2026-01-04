@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import { personalInfo } from "./components/personal-info";
-import jobsDetails from "./components/jobs-details";
-import skills from "./components/skills";
-import review from "./components/review";
-import { FormProvider, useForm } from "react-hook-form";
+import { PersonalInfo } from "./components/personal-info";
+import JobsDetails from "./components/jobs-details";
+import Skills from "./components/skills";
+import Review from "./components/review";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 
-const components = [personalInfo, jobsDetails, skills, review];
+const components = [PersonalInfo, JobsDetails, Skills, Review];
 const stepFields = [
   ["name", "role"],
   ["working", "company"],
@@ -15,6 +15,10 @@ const stepFields = [
 ];
 function App() {
   const [steps, setSteps] = useState(0);
+  const {
+    watch,
+    formState: { isSubmitting },
+  } = useFormContext();
   const methods = useForm({
     mode: "onChange",
     defaultValues: {
@@ -28,19 +32,22 @@ function App() {
       terms: false,
     },
   });
-  useEffect(() => {}, []);
 
   async function onNext() {
     const field = stepFields[steps];
     const isValid = await methods.trigger(field);
-    console.log(field, isValid);
     if (isValid) setSteps((prev) => prev + 1);
+  }
+  async function onPrev() {
+    const field = stepFields[steps];
+    const isValid = await methods.trigger(field);
+    if (isValid) setSteps((prev) => prev - 1);
   }
 
   function onSubmit(data) {
     console.log("data => ", data);
   }
-
+  const tcAcceptance = watch("tc");
   const StepComponent = components[steps];
   return (
     <FormProvider {...methods}>
@@ -61,11 +68,17 @@ function App() {
               </button>
             </div>
             <div className="right">
-              <button type="button">Prev</button>
+              <button type="button" onClick={onPrev} disabled={steps - 1 <= 1}>
+                Prev
+              </button>
             </div>
           </div>
           {steps + 1 == components.length && (
-            <button className="submit" onClick={methods.handleSubmit(onSubmit)}>
+            <button
+              className="submit"
+              onClick={methods.handleSubmit(onSubmit)}
+              disabled={!tcAcceptance || isSubmitting}
+            >
               Submit
             </button>
           )}

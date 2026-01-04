@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 export default function OTPinput({ length = 4, onOTPsubmit = () => {} }) {
   const [otp, setOTP] = useState(new Array(length).fill(""));
   const inputRef = useRef([]);
-  // console.log(inputRef)
+
   useEffect(() => {
     if (inputRef.current[0]) {
       inputRef.current[0].focus();
@@ -15,7 +15,6 @@ export default function OTPinput({ length = 4, onOTPsubmit = () => {} }) {
     const newOtp = [...otp];
 
     // allow only 1 input
-    console.log(val);
     newOtp[i] = val.substring(val.length - 1);
     setOTP(newOtp);
 
