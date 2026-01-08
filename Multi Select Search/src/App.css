@@ -8,14 +8,14 @@ body {
 }
 
 .user-search-input {
-  width: 100%;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid black;
   border-radius: 20px;
+  width: 500px;
 }
 
 .user-search-input input {
