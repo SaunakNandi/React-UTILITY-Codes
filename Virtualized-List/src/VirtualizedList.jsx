@@ -5,6 +5,7 @@ export const VirtualizedList = ({ list, height, itemHeight, width }) => {
   const elementsVisibileInWindow = Math.floor(height / itemHeight);
   const [indices, setIndices] = useState([0, elementsVisibileInWindow]); // taking an extra element
   const visibleList = list.slice(indices[0], indices[1] + 1);
+
   const handleScroll = (e) => {
     const { scrollTop } = e.target; // scrollTop tell how much is scrolled
     const newStartIndex = Math.floor(scrollTop / itemHeight);

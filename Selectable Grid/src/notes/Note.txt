@@ -1,0 +1,70 @@
+🧩 Problem Setup
+
+Imagine this grid (4 columns example):
+
+1   2   3   4
+5   6   7   8
+9  10  11  12
+
+
+Here:
+
+column = 4
+
+Boxes are numbered left → right, top → bottom.
+
+We want:
+
+Given a box number (like 7), find which row and column it belongs to.
+
+✅ Step 1 — Convert to zero-based index
+
+Your box numbers start at 1, but math works easier with 0-based indexing.
+
+So:
+
+index = boxNumber - 1
+
+
+Example:
+
+boxNumber = 7
+index = 6
+
+✅ Step 2 — Find the Row
+
+Each row contains exactly column items.
+
+So:
+
+row = how many full rows fit before this index?
+
+
+That is integer division:
+
+row = Math.floor(index / column)
+
+Example (box 7):
+index = 6
+column = 4
+
+row = Math.floor(6 / 4)
+row = Math.floor(1.5)
+row = 1   ✅ (second row, since row starts from 0)
+
+✅ Step 3 — Find the Column
+
+Column is simply the remainder when dividing by number of columns:
+
+col = index % column
+
+Example (box 7):
+col = 6 % 4
+col = 2   ✅ (third column, zero-based)
+
+🎯 Final Result
+
+For box 7:
+
+Row = 1
+Col = 2

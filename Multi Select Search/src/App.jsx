@@ -86,7 +86,6 @@ function App() {
       };
     });
     setUserData((prev) => [...prev, ...modifiedData]); // preserving old values
-    console.log("skip limit total => ", skip, limit, total);
     if (skip + limit < total) setSkipData(skip + limit);
     else setLoading(false);
   }, [skipData]);
@@ -100,6 +99,7 @@ function App() {
         setSuggestions([]);
     }
     document.addEventListener("mousedown", handleMouseMovement);
+    return () => document.removeEventListener("mousedown", handleMouseMovement);
   }, []);
   return (
     !loading && (

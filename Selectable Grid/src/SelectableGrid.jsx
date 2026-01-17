@@ -11,6 +11,8 @@ const SelectableGrid = ({ row = 15, column = 15 }) => {
     setIsMouseDown(true);
     setSelectedBoxes([boxNumber]);
   };
+
+  // checkout Note.txt
   const handleMouseEnter = useCallback(
     (boxNumber) => {
       if (isMouseDown) {

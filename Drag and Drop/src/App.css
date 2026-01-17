@@ -4,8 +4,6 @@ body {
 }
 .ctn {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 }
 
@@ -24,14 +22,13 @@ div .title h1 {
 
 .drag-drop {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   width: 100vw;
-  padding: 2rem;
 }
 .drag-drop-ctn {
-  width: 25rem;
+  width: 30%;
   height: 30rem;
   background-color: whitesmoke;
   border-radius: 2rem;

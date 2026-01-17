@@ -12,15 +12,14 @@ function App() {
     setExplorerData(finalTree);
   };
   const { tabId, setTabId, setShowInput } = useContext(ExplorerContext);
+
   const handleNewFolder = (e, isFolder) => {
     e.stopPropagation();
-    // setExpand(true)
     setShowInput({
       visible: true,
       isFolder,
     });
     if (tabId == -1 || tabId == 1) setTabId(1);
-    console.log(tabId);
   };
 
   return (

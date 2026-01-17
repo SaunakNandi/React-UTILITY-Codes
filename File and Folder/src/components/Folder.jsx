@@ -8,7 +8,7 @@ export function Folder({ handleInsertNode, explorer }) {
 
   const onAddFolder = (e) => {
     // 13 is the keyCode of 'Enter'
-    if (e.keyCode === 13 && e.target.value) {
+    if (e.target.value.length > 0) {
       handleInsertNode(explorer.id, e.target.value, showInput.isFolder);
       setShowInput({
         ...showInput,
@@ -48,9 +48,12 @@ export function Folder({ handleInsertNode, explorer }) {
                 <input
                   type="text"
                   className="inputContainer__input"
-                  onKeyDown={onAddFolder}
+                  onKeyDown={(e) => e.key === "Enter" && onAddFolder(e)}
                   autoFocus
-                  onBlur={() => setShowInput({ ...showInput, visible: false })}
+                  onBlur={(e) => {
+                    onAddFolder(e);
+                    setShowInput({ ...showInput, visible: false });
+                  }}
                 />
               </div>
             )}
@@ -67,6 +70,6 @@ export function Folder({ handleInsertNode, explorer }) {
       </div>
     );
   } else {
-    return <span className="file">{explorer.name}</span>;
+    return <span className="file">📄 {explorer.name}</span>;
   }
 }
