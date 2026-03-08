@@ -10,7 +10,6 @@ function App() {
       children[i].checked = value;
       toggleCheckBox(children[i].children, value);
     }
-    console.log("toggleChecked ", children);
   }
 
   function dfs(comment, id, value, isFound) {
@@ -26,6 +25,7 @@ function App() {
     }
     return isFound;
   }
+
   function getCount(list) {
     if (list.length == 0) return 0;
     let count = 0;
@@ -44,7 +44,6 @@ function App() {
     return count;
   }
   function handleChange(id, value) {
-    console.log(id, value);
     const comment = structuredClone(data);
     let isFound = false;
     let parentId = -1;
@@ -52,10 +51,8 @@ function App() {
       if (comment[i].id == id) {
         isFound = true;
         parentId = i;
-        console.log("children ", comment[i].children);
 
         toggleCheckBox(comment[i].children, value);
-        console.log("comments ", comment);
         break;
       }
 
@@ -70,7 +67,7 @@ function App() {
       if (count == comment[parentId].children.length)
         comment[parentId].checked = true;
       else comment[parentId].checked = false;
-    }
+    } else comment[parentId].checked = true;
     setData(comment);
   }
   return (

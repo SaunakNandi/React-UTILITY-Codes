@@ -10,7 +10,6 @@ export const useNotification = (position = "top-right") => {
   };
   const triggerNotification = useCallback(
     ({ type, message, duration = 3000 }) => {
-      console.log("Hello");
       const newId = new Date().getTime().toString();
       const newNotification = {
         id: newId,
