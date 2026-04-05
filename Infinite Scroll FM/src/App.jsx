@@ -1,15 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import InfiniteScrollDomApi from './InfiniteScrollDomApi'
+import "./App.css";
+import InfiniteScrollDomApi from "./InfiniteScrollDomApi";
 
 function App() {
   return (
     <>
-      <InfiniteScrollDomApi/>
+      <InfiniteScrollDomApi />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

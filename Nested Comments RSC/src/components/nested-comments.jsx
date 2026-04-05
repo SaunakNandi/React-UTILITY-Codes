@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useComment } from "../hooks/use-comment";
 import { Comment } from "./comment";
 
@@ -17,7 +17,7 @@ const NestedComments = ({
   } = useComment(comments);
   const handleReply = (commentId, content) => {
     insertComment(commentId, content);
-    onSubmit(content); // if user want to do further something
+    onSubmit(commentId, content); // if user want to do further something
   };
   const handleEditChange = (e) => {
     setComment(e.target.value);

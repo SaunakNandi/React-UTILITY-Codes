@@ -11,7 +11,7 @@ export const Comment = ({
   const [editMode, setEditMode] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
   const handleChange = (e) => {
-    if (editMode) setEditedContent;
+    if (editMode) setEditedContent(e.target.value);
     else setReplyContent(e.target.value);
   };
   const toggleExpand = () => {

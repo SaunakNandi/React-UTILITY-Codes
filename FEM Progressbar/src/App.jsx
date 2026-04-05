@@ -1,34 +1,25 @@
-import { useEffect, useState } from 'react'
-import ProgressBar from './component/progress/progress'
-import './App.css'
-import Progress_pro from './component/progress/Progress_pro'
+import { useEffect, useState } from "react";
+
+import "./App.css";
+import { Progresspro } from "./component/progress/Progress-pro";
 
 function App() {
-  const [value,setValue]=useState(10)
+  const [value, setValue] = useState(10);
 
-  useEffect(()=>{
-    let id=setInterval(()=>{
-      setValue((prev)=>prev+10)
-    },1000)
-    return ()=>{
-      clearInterval(id)
-    }
-  },[])
-  function onStart()
-  {
-
-  }
-
-  function onComplete()
-  {
-
-  }
+  useEffect(() => {
+    let id = setInterval(() => {
+      setValue((prev) => prev + 1);
+    }, 100);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
   return (
     <>
-      <ProgressBar value={value} max={100} onStart={onStart} onComplete={onComplete}/>
-      {/* <Progress_pro value={value} max={100} onStart={onStart} onComplete={onComplete}/> */}
+      {/* <ProgressBar value={value} max={100} onStart={onStart} onComplete={onComplete}/> */}
+      <Progresspro value={value} max={100} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

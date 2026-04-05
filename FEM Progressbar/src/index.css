@@ -54,47 +54,144 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.progress-bar{
-  height: 40px;
-  width: 80vw;
-  background-color: aquamarine;
-  margin-top: 100px;
+#root {
+  max-width: 1280px;
+
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+input[type="text"] {
+  height: 30px;
+  background-color: #f7f7f7;
+  border-radius: 4px;
+  font-size: 20px;
+  padding-inline: 8px;
+  color: #333;
+  transition: all 0.2s linear;
+}
+
+input[type="text"]:focus {
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(51, 138, 209);
+  outline: 0;
+}
+
+button.danger {
+  background-color: #980909;
+}
+
+button.success {
+  background-color: #0e6c18;
+}
+
+button.warning {
+  background-color: #ae650c;
+}
+
+button {
+  font-weight: bold !important;
+}
+
+button:hover {
+  box-shadow: 0 2px 5px lightgreen;
+}
+
+button:focus {
+  box-shadow: 0 2px 5px lightcoral;
+}
+
+button:active {
+  box-shadow: 0 2px 5px white;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.branding {
+  position: fixed;
+  height: 64px;
+  width: max-content;
+  padding: 8px;
+  top: 2px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.branding .yt,
+.branding .it {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.8px;
+}
+
+.branding a {
+  color: #f7f7f7;
+  font-size: 12px;
+}
+
+progress::-moz-progress-bar {
+  background-color: aqua;
   border-radius: 10px;
+  transition: all 0.2s linear;
+}
+
+.visible-hidden {
+  height: 0;
   overflow: hidden;
-}
-
-.progress-value{
-  height: 100%;
-  width: 100%;
-  background-color: brown;
-  transition: width 0.2s ease-in;
-  transform: translateX(-100%);
-}
-
-.progress{
-  height: 40px;
-  width: 80vw;
-}
-progress{
-  width: 100%;
-  height: 60px;
-  accent-color: red;
-  background-color: yellow;
-  -webkit-appearance:none;  /*Removing the browser  implemented colours*/
-  border-radius: 10px;
-}
-
-/* initial state progressbar */
-progress::-webkit-progress-bar{
-  background-color: #fff;
-  border-radius: 10px;
-}
-
-/* control the change in progress*/
-progress::-webkit-progress-value{
-  background-color: aqua;  
-  border-radius: 10px;
-  transition: all 0.2s;
+  position: absolute;
 }
 @media (prefers-color-scheme: light) {
   :root {

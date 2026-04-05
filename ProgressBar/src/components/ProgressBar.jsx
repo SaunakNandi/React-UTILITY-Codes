@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MAX, MIN } from "../constants";
 
 export default function ProgressBar({ value, onComplete = () => {} }) {
@@ -12,15 +12,11 @@ export default function ProgressBar({ value, onComplete = () => {} }) {
       {/* // scale value should be between 0 and 1 */}
       <div
         style={{ width: `${value}%` }}
-        // style={{
-        //   transform: `scaleX(${value / MAX})`,
-        //   transformOrigin: "left",
-        // }}
         role="progressbar"
         aria-valuemin={MIN}
         aria-valuenow={value}
         aria-valuemax={MAX}
-      ></div>
+      />
     </div>
   );
 }

@@ -52,11 +52,8 @@ const OTP = ({ count }) => {
       // with lastIndex there comes a bug
       // if I am at 1st index and enter a number it will go to the last empty box. To solve that we can do like this
       if (oldOTPs) {
-        const tempArray = [...otps];
-        const trimedArray = tempArray.fill("*", 0, i);
-
         // find index of next empty box
-        const emptyIndex = trimedArray.indexOf("");
+        const emptyIndex = otps.indexOf("");
         inputRef.current[emptyIndex]?.focus();
         return emptyIndex;
       } else {
@@ -70,7 +67,7 @@ const OTP = ({ count }) => {
     if (inputRef.current[i - 1]) inputRef.current[i - 1]?.focus();
   }
 
-  function handlePaste(i) {
+  function handlePaste() {
     return (event) => {
       // manage if for i>0
       const pastedData = event.clipboardData.getData("Text").slice(0, count);

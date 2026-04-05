@@ -7,8 +7,8 @@ function App() {
       <h1>Nested comment system</h1>
       <NestedComments
         comments={commentsData}
-        onSubmit={(content) => {}}
-        onEdit={(content) => {}}
+        onSubmit={(commentId, content) => {}}
+        onEdit={(commentId, content) => {}}
         onDelete={(commentId) => {}}
       />
     </div>
