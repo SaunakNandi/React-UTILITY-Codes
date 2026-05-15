@@ -118,7 +118,6 @@ function App() {
     // console.log(inputs)
     Object.keys(inputs).forEach((key) => {
       inputs[key].inputs.forEach((x) => {
-        console.log(x.value);
         if (x.type === "checkbox") {
           console.log(x.checked, x.value);
           if (x.checked) params[x.name] = x.value;
