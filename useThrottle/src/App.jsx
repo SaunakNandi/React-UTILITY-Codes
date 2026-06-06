@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
 import { useThrottle } from "./useThrottle";
 import "./App.css";
+import { useScroll } from "./use-scroll";
 
+const delay = 300;
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  // Throttle the scroll position with a delay of 300ms
-  const throttledScrollPosition = useThrottle(handleScroll, 300);
-
-  // Handle the scroll event and update the scroll position
   const handleScroll = (event) => {
     const position = window.scrollY; // Get the vertical scroll position
     setScrollPosition(position); // Set the scroll position in state
   };
 
+  // Throttle the scroll position with a delay of 300ms
+  const throttledScrollPosition = useScroll(handleScroll, delay);
+
+  // Handle the scroll event and update the scroll position
+
   useEffect(() => {
     // Attach the scroll event listener
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", throttledScrollPosition);
 
     // Cleanup on unmount
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", throttledScrollPosition);
     };
   }, []);
 
