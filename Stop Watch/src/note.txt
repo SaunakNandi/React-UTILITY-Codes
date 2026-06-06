@@ -1,0 +1,23 @@
+⏱️ The Big Problem with setInterval
+You might wonder: "Why not just do setTime(time + 10) every 10 milliseconds?"
+Because JavaScript is a little lazy! setInterval is notorious for drifting. If your computer gets busy, a 10ms delay might actually take 12ms or 15ms. If you just keep adding 10, your stopwatch will slowly start lagging behind real-world time. 🏃‍♂️💨
+To fix this, the code relies on the computer's actual system clock (new Date().getTime()), which never lies.
+🔍 Line-by-Line Breakdown
+1. Setting the Anchor
+JavaScript
+stopwatchRef.current = new Date().getTime() - time;
+This line calculates a "virtual start time" and saves it in your ref. It figures out exactly when the stopwatch should have started to match the current elapsed time.
+💡 Let's use an example:
+Say the current real time is 5000 (in milliseconds).
+You previously ran the timer for 1000 milliseconds and paused it.
+This line does: 5000 - 1000 = 4000.
+Your anchor (stopwatchRef.current) is now locked at 4000. It mentally rewinds history to mark your true starting point.
+2. Calculating the Progress
+JavaScript
+setTime(new Date().getTime() - stopwatchRef.current);
+Inside the interval, the stopwatch wakes up and checks the actual real-world clock again, then subtracts that fixed anchor.
+💡 Continuing the example:
+The interval fires a moment later. The real time is now 5012 (notice the 2ms lag!).
+The code does: 5012 - 4000 (your anchor) = 1012.
+setTime gets updated to 1012.
+Because it always compares the present real time to that past anchor, any lag from setInterval is instantly wiped out. Your stopwatch stays perfectly synced with reality! 🚀
