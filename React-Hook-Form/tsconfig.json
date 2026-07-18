@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+
+  "compilerOptions": {
+    "strict": false, // 🌟 Make sure this is true!
+    "strictNullChecks": true,
+    "strictFunctionTypes": true
+  }
+}
