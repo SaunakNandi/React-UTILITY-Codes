@@ -1,39 +1,35 @@
 import { useCallback, useEffect, useRef } from "react";
 
+type GenericCallback = (...args: []) => void;
 export const useScroll = (callback, delay) => {
   const timeoutRef = useRef(null);
-  const lastUpdatedTimeRef = useRef(0);
+  const lastUpdatedRef = useRef(0);
   const callbackRef = useRef(null);
 
   useEffect(() => {
     callbackRef.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, []);
+  }, [callback]);
 
   return useCallback(
     (...args) => {
       const now = new Date();
-      const timeRemaining = delay - (now - lastUpdatedTimeRef.current);
+      const timeRemaining = delay - (now - lastUpdatedRef.current);
 
       if (timeRemaining <= 0) {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
           timeoutRef.current = null;
         }
-
-        // When the browser triggers a scroll event, it automatically passes an event object to the listener, here throttledScrollPosition
         callbackRef.current(...args);
-        lastUpdatedTimeRef.current = now;
+        lastUpdatedRef.current = now;
       } else if (!timeoutRef.current) {
-        timeoutRef.current = setTimeout(() => {
-          lastUpdatedTimeRef.current = new Date();
-          callbackRef.current(...args);
+        setTimeout(() => {
           timeoutRef.current = null;
+          callbackRef.current(...args);
+          lastUpdatedRef.current == new Date();
         }, timeRemaining);
       }
     },

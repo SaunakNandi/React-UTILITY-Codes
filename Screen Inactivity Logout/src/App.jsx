@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useRef } from "react";
+import "./App.css";
 
+const idealTime = 15 * 60 * 1000;
 function App() {
-  const [count, setCount] = useState(0)
+  const timeRef = useRef();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  async function logout() {
+    try {
+      await fetch(`${api_endpoint}/auth/logout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      navigate("/login");
+    }
+  }
+  function resetTimer() {
+    if (timeRef.current) clearTimeout(timeRef.current);
+    timeRef.current = setTimeout(logout, idealTime);
+  }
+  useEffect(() => {
+    const events = ["mousemove", "click", "scroll", "keydown"];
+    events.forEach((event) => window.addEventListener(event, resetTimer));
+    resetTimer();
+    return () => {
+      events.forEach((event) => window.removeEventListener(event, resetTimer));
+      if (timeRef.current) clearTimeout(timeRef.current);
+    };
+  }, []);
+  return <></>;
 }
 
-export default App
+export default App;
