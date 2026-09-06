@@ -17,7 +17,7 @@ const Stopwatch = ({ handleAdd }) => {
 
   function handlePause() {
     // same thing goes here. To stop multiple pause click if the timer is already paused
-    if (intervalRef.current == null) return;
+    if (intervalRef.current === null) return;
     clearInterval(intervalRef.current);
     intervalRef.current = null;
   }
@@ -40,13 +40,12 @@ const Stopwatch = ({ handleAdd }) => {
   }, []);
 
   function handleBlur() {
-    console.log("Blur");
-    needToResumeRef.current = !!intervalRef.current;
-    clearInterval(intervalRef.current);
+    if (intervalRef.current === null) return;
+    needToResumeRef.current = true;
+    handlePause();
   }
 
   function handleFocus() {
-    console.log("Focus");
     if (needToResumeRef.current) {
       needToResumeRef.current = false;
       handleStart();

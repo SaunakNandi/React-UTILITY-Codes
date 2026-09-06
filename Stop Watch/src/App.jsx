@@ -1,11 +1,8 @@
-import { useState } from 'react'
-import './App.css'
-import StopWatchList from './StopWatchList'
+import "./App.css";
+import StopWatchList from "./StopWatchList";
 
 function App() {
-  return (
-    <StopWatchList/>
-  )
+  return <StopWatchList />;
 }
 
-export default App
+export default App;

@@ -1,0 +1,58 @@
+export const dataObj = {
+  1: {
+    id: 1,
+    parentId: null,
+    children: [2, 3, 4],
+    check: false,
+    label: "C1",
+  },
+  2: {
+    id: 2,
+    parentId: 1,
+    children: [],
+    check: false,
+    label: "C1-C2",
+  },
+  3: {
+    id: 3,
+    parentId: 1,
+    children: [5, 6],
+    check: false,
+    label: "C1-C3",
+  },
+  4: {
+    id: 4,
+    parentId: 1,
+    children: [],
+    check: false,
+    label: "C1-C4",
+  },
+  5: {
+    id: 5,
+    parentId: 3,
+    children: [8],
+    check: false,
+    label: "C1-C3-C5",
+  },
+  6: {
+    id: 6,
+    parentId: 3,
+    children: [],
+    check: false,
+    label: "C1-C3-C6",
+  },
+  7: {
+    id: 7,
+    parentId: null,
+    children: [],
+    check: false,
+    label: "C7",
+  },
+  8: {
+    id: 8,
+    parentId: 5,
+    children: [],
+    check: false,
+    label: "C1-C3-C5-C8",
+  },
+};
