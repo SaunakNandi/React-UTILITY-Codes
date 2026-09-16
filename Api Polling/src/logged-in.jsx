@@ -4,9 +4,10 @@ export function LoggedIn({ isLoggedIn, symbol }) {
   const [price, setPrice] = useState();
 
   const controllerRef = useRef(null);
-  async function PriceCalculator(controller) {
+  async function PriceCalculator() {
     if (controllerRef.current) controllerRef.current.abort();
-    controllerRef.current = new AbortController();
+    const controller = new AbortController();
+    controllerRef.current = controller;
     try {
       const res = await fetch(`/api/get-price-update?id=${symbol}`, {
         method: "GET",
@@ -29,7 +30,7 @@ export function LoggedIn({ isLoggedIn, symbol }) {
     PriceCalculator();
     const intervalId = setInterval(() => {
       PriceCalculator();
-    }, 1000);
+    }, 3000);
 
     document.addEventListener("visibilitychange", checker);
 
