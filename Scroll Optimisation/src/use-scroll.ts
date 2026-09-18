@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef } from "react";
 
-type GenericCallback = (...args: []) => void;
-export const useScroll = (callback, delay) => {
-  const timeoutRef = useRef(null);
+export const useScroll = <T extends unknown[]>(
+  callback: (...args: T) => void,
+  delay: number,
+) => {
+  const timeoutRef = useRef<number | null>(null);
   const lastUpdatedRef = useRef(0);
-  const callbackRef = useRef(null);
+  const callbackRef = useRef<(...args: T) => void>(callback);
 
   useEffect(() => {
     callbackRef.current = callback;
@@ -14,8 +16,8 @@ export const useScroll = (callback, delay) => {
   }, [callback]);
 
   return useCallback(
-    (...args) => {
-      const now = new Date();
+    (...args: T) => {
+      const now = Date.now();
       const timeRemaining = delay - (now - lastUpdatedRef.current);
 
       if (timeRemaining <= 0) {
@@ -26,10 +28,10 @@ export const useScroll = (callback, delay) => {
         callbackRef.current(...args);
         lastUpdatedRef.current = now;
       } else if (!timeoutRef.current) {
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           timeoutRef.current = null;
           callbackRef.current(...args);
-          lastUpdatedRef.current == new Date();
+          lastUpdatedRef.current = Date.now();
         }, timeRemaining);
       }
     },
