@@ -2,13 +2,10 @@ import "../App.css";
 
 const ColumnBoard = ({ status, list, setListItem }) => {
   function startDragging(e, note) {
-    e.dataTransfer.setData("task-id", `${note.id}`);
-    console.log("calling", note);
+    e.dataTransfer.setData("task-id", note.id);
   }
   function dragging(e) {
     e.preventDefault();
-    const ids = e.dataTransfer.getData("task-id");
-    console.log(ids);
   }
   function onDrop(e) {
     const requiredId = e.dataTransfer.getData("task-id");
