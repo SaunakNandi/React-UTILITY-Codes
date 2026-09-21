@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const appClient = axios.create({
   baseURL: "import.meta.env.VITE_API_BASE_URL",
@@ -8,16 +8,21 @@ export const appClient = axios.create({
   },
 });
 
-let failedQueue = [];
-function processQueue(err, token = null) {
+interface QueueItem {
+  resolve: (token: string | null) => void;
+  reject: (error: unknown) => void;
+}
+
+let failedQueue: QueueItem[] = [];
+function processQueue(err: unknown, token: string | null = null): void {
   failedQueue.forEach((prom) => {
     if (err) {
       prom.reject(err);
-    } else prom.resolve(err);
+    } else prom.resolve(token);
   });
 }
 
-async function refreshToken() {
+async function refreshToken(): Promise<string> {
   const res = await axios.post(
     `https://api.example.com/v1/auth/refresh`,
     {
@@ -30,7 +35,7 @@ async function refreshToken() {
 
   const { access_token, refresh_token } = res.data;
   sessionStorage.setItem("access_token", access_token);
-  if (access_token) sessionStorage.setItem("refresh_token", refresh_token);
+  if (refresh_token) sessionStorage.setItem("refresh_token", refresh_token);
   return access_token;
 }
 
@@ -42,7 +47,7 @@ appClient.interceptors.request.use((config) => {
 
 let isRefetching = false;
 appClient.interceptors.response.use(
-  (response) => response,
+  (response: AxiosResponse) => response,
   async (error) => {
     const originalRequest = error.config;
 
@@ -76,5 +81,6 @@ appClient.interceptors.response.use(
           });
       });
     }
+    return Promise.reject(error);
   },
 );
