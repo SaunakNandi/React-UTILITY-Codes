@@ -1,12 +1,17 @@
 import axios, { AxiosResponse } from "axios";
 
+let inMemoryAccessToken: string | null = null;
+
 export const appClient = axios.create({
   baseURL: "import.meta.env.VITE_API_BASE_URL",
   timeout: 10000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+// The frontend's only job is passing withCredentials: true, while keeping the short-lived access_token strictly in-memory (in a module variable or Redux store) rather than in sessionStorage
 
 interface QueueItem {
   resolve: (token: string | null) => void;
@@ -14,33 +19,36 @@ interface QueueItem {
 }
 
 let failedQueue: QueueItem[] = [];
+
+function setAccessToken(token: string | null) {
+  inMemoryAccessToken = token;
+}
+
 function processQueue(err: unknown, token: string | null = null): void {
   failedQueue.forEach((prom) => {
     if (err) {
       prom.reject(err);
     } else prom.resolve(token);
   });
+  failedQueue = [];
 }
 
 async function refreshToken(): Promise<string> {
   const res = await axios.post(
     `https://api.example.com/v1/auth/refresh`,
+    {},
     {
-      refreshToken: sessionStorage.getItem("refresh_token"),
-    },
-    {
-      withCredentials: true,
+      withCredentials: true, // 🔑 Tells the browser: "Include the HttpOnly cookie!"
     },
   );
 
-  const { access_token, refresh_token } = res.data;
-  sessionStorage.setItem("access_token", access_token);
-  if (refresh_token) sessionStorage.setItem("refresh_token", refresh_token);
+  const { access_token } = res.data;
+  setAccessToken(access_token);
   return access_token;
 }
 
 appClient.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem("access_token");
+  const token = inMemoryAccessToken;
   if (token) config.headers.set("Authorization", `Bearer ${token}`);
   return config;
 });
