@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -52,37 +52,6 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-.multi-step-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-fieldset {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 30vw;
-  gap: 16px;
-  background-color: darkolivegreen;
-  border-radius: 6px;
-}
-
-.control-row {
-  display: flex;
-  gap: 20px;
-}
-
-.control-row label {
-  width: 200px;
-}
-
-.step3,.step2 {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 @media (prefers-color-scheme: light) {

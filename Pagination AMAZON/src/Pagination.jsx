@@ -43,7 +43,7 @@ const Pagination = ({
     start,
     end,
     visibleSlots - 1,
-    currentPage
+    currentPage,
   );
   return (
     <div className="pagination">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const Post = ({ data, setPageNo }) => {
   useEffect(() => {
@@ -29,7 +29,7 @@ const Post = ({ data, setPageNo }) => {
   }, [data]);
   return (
     <div className="container">
-      {data.map((item, i) => (
+      {data.map((item) => (
         <img
           className="image-post"
           src={item.download_url}
