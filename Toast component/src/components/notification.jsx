@@ -19,7 +19,7 @@ const Notification = ({ type = "info", message, onClose }) => {
     <div className={`notifiation ${type}`}>
       <p>{icons[type]}</p>
       <p>{message}</p>
-      <AiOutlineClose color="white" className="closeBtn" onClose={onClose} />
+      <AiOutlineClose color="white" className="closeBtn" onClick={onClose} />
     </div>
   );
 };

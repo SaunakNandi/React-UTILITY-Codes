@@ -1,8 +1,8 @@
-import { useNotification } from "../hooks/use-notification";
+import { useContext } from "react";
+import { NotificationContext } from "../context/Notification-Context";
 
 const ComponentA = () => {
-  const { triggerNotification, NotificationComponent } =
-    useNotification("top-right");
+  const { triggerNotification } = useContext(NotificationContext);
   return (
     <div>
       <strong>Component A</strong>
@@ -19,8 +19,6 @@ const ComponentA = () => {
           Trigger
         </button>
       </div>
-
-      {NotificationComponent}
     </div>
   );
 };

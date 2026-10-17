@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-export const DialogModal = ({ isOpen, onClose, title, children }) => {
+export const DialogModal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  styles = {},
+}) => {
   const overflowRef = useRef(null);
   useEffect(() => {
     if (!isOpen) return;
@@ -35,6 +41,7 @@ export const DialogModal = ({ isOpen, onClose, title, children }) => {
         backgroundColor: "rgba(0,0,0,0.5)",
         justifyContent: "center",
         alignItems: "center",
+        ...styles.overlay,
       }}
       ref={overflowRef}
       role="dialog"
@@ -51,6 +58,7 @@ export const DialogModal = ({ isOpen, onClose, title, children }) => {
           border: "1px solid pink",
           paddingTop: "10px",
           backgroundColor: "lightpink",
+          ...styles.boxmodal,
         }}
       >
         <div
@@ -59,6 +67,7 @@ export const DialogModal = ({ isOpen, onClose, title, children }) => {
             height: "24px",
             display: "flex",
             justifyContent: "space-between",
+            ...styles.content,
           }}
         >
           {title && <p style={{ fontSize: "18px" }}>{title}</p>}
