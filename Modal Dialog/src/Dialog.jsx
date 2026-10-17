@@ -1,40 +1,72 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
-const Dialog = ({close,children}) => {
-    useEffect(()=>{
-        document.addEventListener('keyup',handleKeyUp)  //  subscribing to keyboard events
-        return ()=>{
-            document.removeEventListener("keyup",handleKeyUp)
-        }
-    },[])
-    const contentRef=useRef()
-    const backdropRef=useRef()
-
-    function handleKeyUp(e){
-        // alert(e.key)
-        if(e.key==='Escape')
-            handleClose()
-    }
-    function handleClose(){
-        // onClose() will not work here because the opacity is 0 and Dialog is still in DOM and has not been removed from DOM
-        contentRef.current.classList.add("hide-dialog")
-        backdropRef.current.classList.add("hide-dialog")
-        // calling onClose() after animation ends
-        // once:true -> runs only once and get removed after that
-        contentRef.current.addEventListener('animationend',close,{once:true}) 
+export const DialogModal = ({ isOpen, onClose, title, children }) => {
+  const overflowRef = useRef(null);
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleClick(e) {
+      if (e.key == "Escape") onClose();
     }
 
-  return (
-    <div className='dialog'>
-        <div ref={backdropRef} onClick={handleClose} className="dialog-backdrop"/>
-        <div ref={contentRef} className="dialog-content">
-            {
-                !!close && <button onClick={handleClose} className='dialog-close'>&times;</button>
-            }
-            {children}
+    // Lock background scrolling
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keyup", handleClick);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keyup", handleClick);
+    };
+  }, [isOpen]);
+  function handleOverlayClick(e) {
+    if (e.target == overflowRef.current) onClose();
+  }
+  if (!isOpen) return null;
+  return createPortal(
+    <div
+      style={{
+        position: "fixed",
+        top: "0",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+        display: "flex",
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      ref={overflowRef}
+      role="dialog"
+      onClick={handleOverlayClick}
+    >
+      <div
+        style={{
+          width: "300px",
+          height: "200px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "baseline",
+          border: "1px solid pink",
+          paddingTop: "10px",
+          backgroundColor: "lightpink",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            height: "24px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          {title && <p style={{ fontSize: "18px" }}>{title}</p>}
+          <button onClick={onClose}>X</button>
         </div>
-    </div>  
-  )
-}
-
-export default Dialog
+        {children}
+      </div>
+    </div>,
+    document.body,
+  );
+};

@@ -1,28 +1,27 @@
-import { useState } from 'react'
-import Dialog from './Dialog'
+import { useState } from "react";
+import { DialogModal } from "./Dialog";
 
 function App() {
-  const [showDialog, setShowDialog] = useState(false)
-  const handleShowDialog=()=>{
+  const [showDialog, setShowDialog] = useState(false);
+  const handleShowDialog = () => {
     // console.log(showDialog)
-    setShowDialog(!showDialog)
-  }
-  const handleCloseDialog=()=>{
-    setShowDialog(false)
-  }
+    setShowDialog(!showDialog);
+  };
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+  };
   return (
-    <div className='App'>
+    <div className="App">
       <button onClick={handleShowDialog}>Toggle Dialog</button>
-      {
-        showDialog && (
-          <Dialog close={handleCloseDialog}>
-            <h1>Title</h1>
-            <span>Random</span>
-          </Dialog>
-        )
-      }
+      <DialogModal
+        isOpen={showDialog}
+        onClose={handleCloseDialog}
+        title={"Hi, I am a custom Modal"}
+      >
+        <p>Random text</p>
+      </DialogModal>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
