@@ -1,42 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 
 const cache = new Map();
-export const useFetchAPI = (api, search) => {
-  const [data, setData] = useState([]);
+export const useFetchApi = (url) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
-  const controllerRef = useRef();
+  const [error, setError] = useState(null);
+  const controlerRef = useRef();
 
-  async function FetchAPI(controller) {
+  const fetchApi = async () => {
     try {
-      const res = await fetch(`/api?seach=${search}`, {
-        signal: controller.signal,
-      });
-      const res_data = await res.json();
-      setData(res_data);
-      cache.set(search, res_data);
+      const res = await fetch(url, { signal: controlerRef.current.signal });
+      const response = await res.json();
+      setData(response);
+      cache.set(url, response);
     } catch (error) {
       if (error.name !== "AbortError") {
+        console.warn(error);
         setError(error);
       }
     } finally {
-      if (!controller.signal.aborted) setLoading(false);
+      if (!controlerRef.current.aborted) setLoading(false);
+      return;
     }
-  }
+  };
   useEffect(() => {
-    if (!api || search) return;
-    if (cache && cache.get(search)) {
-      setData(cache.get(search));
+    if (!url) {
+      setData(null);
+      setLoading(false);
+      return;
+    }
+    if (cache.has(url)) {
+      setData(cache.get(url));
+      setLoading(false);
       return;
     }
     setLoading(true);
-    if (controllerRef.current) controllerRef.current.abort();
-    const controller = new AbortController();
-    controllerRef.current = controller;
-    FetchAPI(controller);
+    if (controlerRef.current) controlerRef.current.abort();
+    controlerRef.current = new AbortController();
+    fetchApi();
     return () => {
-      controller.abort();
+      controlerRef.current.abort();
     };
-  }, [api, search]);
-  return { data, loading, error };
+  }, [api]);
+
+  return { data, error, loading };
 };
