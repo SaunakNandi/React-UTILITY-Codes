@@ -33,7 +33,6 @@ function App() {
     { label: "frontend", value: "Frontend" },
     { label: "backend", value: "Backend" },
   ];
-  console.log("selectd role");
   function onSubmit(data: MainSchemaType) {
     console.log("data ", data);
   }
@@ -84,6 +83,13 @@ function App() {
             {selectedRole === "backend" && (
               <div className="">
                 <input {...register("framork_or_library")} />
+                {
+                  (
+                    errors as FieldErrors<
+                      Extract<MainSchemaType, { role: "backend" }>
+                    >
+                  ).framork_or_library?.message
+                }
               </div>
             )}
           </div>
