@@ -42,15 +42,15 @@ export const useAppState = () => {
 
 export const useDispatch = () => {
   const context = useContext(DispatchContext);
-  if (!context) throw new Error("useAppState must be within AppProvider");
+  if (!context) throw new Error("useDispatch must be within AppProvider");
   return context;
 };
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
   return (
-    <StateContext.Provider value={state}>
-      <DispatchContext value={dispatch}>{children}</DispatchContext>
-    </StateContext.Provider>
+    <DispatchContext.Provider value={dispatch}>
+      <StateContext.Provider value={state}>{children}</StateContext.Provider>
+    </DispatchContext.Provider>
   );
 };
