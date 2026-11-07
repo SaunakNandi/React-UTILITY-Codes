@@ -1,37 +1,60 @@
 import { useEffect, useRef, useState } from "react";
-import { arr } from "./constant";
 import "./App.css";
 
 function App() {
+  const elementRef = useRef(null);
   const observerRef = useRef(null);
-  const elementRef = useRef([]);
-
+  const [arr, setArr] = useState(new Array(40).fill("*"));
+  const [loading, setLoading] = useState(false);
+  const loadingRef = useRef(false);
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting)
-            console.warn("visible inside observer => ", entry.target);
-        });
+      ([entry]) => {
+        if (entry.isIntersecting && !loadingRef.current) {
+          setLoading(true);
+          loadingRef.current = true;
+          setTimeout(() => {
+            setArr((prev) => {
+              const newArr = new Array(20).fill("*");
+              return [...prev, ...newArr];
+            });
+            setLoading(false);
+            loadingRef.current = false;
+          }, 2000);
+        }
       },
       {
         root: observerRef.current,
         threshold: 0.5,
-      }
+      },
     );
-    elementRef.current.forEach((item) => observer.observe(item));
-    return () => observer.disconnect;
+    if (elementRef.current) observer.observe(elementRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="box" ref={observerRef}>
+    <div
+      style={{
+        height: "400px",
+        width: "200px",
+        backgroundColor: "green",
+        overflow: "scroll",
+      }}
+      ref={observerRef}
+    >
       {arr.map((item, i) => {
         return (
-          <div className="element" ref={(el) => (elementRef.current[i] = el)}>
+          <div
+            style={{ width: "100%", height: "20px", border: "1px solid green" }}
+            key={i}
+          >
             {item}
           </div>
         );
       })}
+      <div ref={elementRef} style={{ height: "30px", textAlign: "center" }}>
+        {loading && <p>Loading...</p>}
+      </div>
     </div>
   );
 }
