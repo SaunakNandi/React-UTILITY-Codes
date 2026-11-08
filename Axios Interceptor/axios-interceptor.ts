@@ -1,15 +1,20 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 let inMemoryAccessToken: string | null = null;
 
 export const appClient = axios.create({
-  baseURL: "import.meta.env.VITE_API_BASE_URL",
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
   timeout: 10000,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+// for typescript
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 // The frontend's only job is passing withCredentials: true, while keeping the short-lived access_token strictly in-memory (in a module variable or Redux store) rather than in sessionStorage
 
@@ -19,10 +24,6 @@ interface QueueItem {
 }
 
 let failedQueue: QueueItem[] = [];
-
-function setAccessToken(token: string | null) {
-  inMemoryAccessToken = token;
-}
 
 function processQueue(err: unknown, token: string | null = null): void {
   failedQueue.forEach((prom) => {
@@ -35,15 +36,15 @@ function processQueue(err: unknown, token: string | null = null): void {
 
 async function refreshToken(): Promise<string> {
   const res = await axios.post(
-    `https://api.example.com/v1/auth/refresh`,
+    `${import.meta.env.VITE_API_BASE_URL}/v1/auth/refresh`,
     {},
     {
-      withCredentials: true, // 🔑 Tells the browser: "Include the HttpOnly cookie!"
+      withCredentials: true, // 🔑 Sends the secure HttpOnly cookie to the backend
     },
   );
 
   const { access_token } = res.data;
-  setAccessToken(access_token);
+  inMemoryAccessToken = access_token;
   return access_token;
 }
 
@@ -53,41 +54,51 @@ appClient.interceptors.request.use((config) => {
   return config;
 });
 
-let isRefetching = false;
+let isRefreshing = false;
 appClient.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config as CustomAxiosRequestConfig;
 
+    // Guard: Ignore if there's no request config (e.g., pre-flight network failure)
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefetching) {
+      if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
+            originalRequest._retry = true;
             originalRequest.headers.set("Authorization", `Bearer ${token}`);
             return appClient(originalRequest);
           })
           .catch((err) => Promise.reject(err));
       }
-      isRefetching = true;
+      isRefreshing = true;
       originalRequest._retry = true;
 
-      return new Promise((resolve, reject) => {
-        refreshToken()
-          .then((token) => {
-            processQueue(null, token);
-            originalRequest.headers.set("Authorization", `Bearer ${token}`);
-            return resolve(appClient(originalRequest));
-          })
-          .catch((err) => {
-            processQueue(err, null);
-            reject(err);
-          })
-          .finally(() => {
-            isRefetching = false;
-          });
-      });
+      try {
+        const newAccessToken = await refreshToken();
+        processQueue(null, newAccessToken);
+        originalRequest.headers.set(
+          "Authorization",
+          `Bearer ${newAccessToken}`,
+        );
+        return appClient(originalRequest);
+      } catch (refreshError) {
+        // 🚨 Purge session on refresh failure
+        processQueue(refreshError, null);
+        inMemoryAccessToken = null;
+
+        // Optional: Redirect to login or dispatch an auth event
+        // window.location.href = "/login";
+
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false; // 🔓 Release lock
+      }
     }
     return Promise.reject(error);
   },
