@@ -25,12 +25,8 @@ const Pagination = ({
       --visibleSlots;
       ++leftPointer;
     }
-    if (rightPointer >= end - 1) {
-      for (
-        let i = leftPointer - (visibleSlots - (rightPointer - leftPointer + 1));
-        i <= rightPointer;
-        i++
-      )
+    if (rightPointer === end - 1) {
+      for (let i = rightPointer - visibleSlots + 1; i <= rightPointer; i++)
         result.push(i);
     } else {
       for (let i = leftPointer; i <= rightPointer - 1; i++) result.push(i);
@@ -39,12 +35,7 @@ const Pagination = ({
     result.push(end);
     return result;
   }
-  const pagination = generatePagination(
-    start,
-    end,
-    visibleSlots - 1,
-    currentPage,
-  );
+  const pagination = generatePagination(start, end, visibleSlots, currentPage);
   return (
     <div className="pagination">
       <button
@@ -55,6 +46,7 @@ const Pagination = ({
       {pagination.map((page) => (
         <button
           className="page_no"
+          disabled={page === "..."}
           onClick={() => onPageChange(page)}
           ref={(el) => (buttonRef.current[page] = el)}
           style={{ border: `${currentPage == page ? "2px solid green" : ""}` }}

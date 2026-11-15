@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Pagination
-        visibleSlots={6}
+        visibleSlots={5}
         currentPage={currentPage}
         start={1}
         end={20}
