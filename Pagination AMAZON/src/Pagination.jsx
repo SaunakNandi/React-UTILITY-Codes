@@ -7,7 +7,6 @@ const Pagination = ({
   end,
   onPageChange,
 }) => {
-  const buttonRef = useRef([]);
   function generatePagination(start, end, visibleSlots, currentPage) {
     let result = [];
     if (start + visibleSlots == end - 1) {
@@ -48,7 +47,6 @@ const Pagination = ({
           className="page_no"
           disabled={page === "..."}
           onClick={() => onPageChange(page)}
-          ref={(el) => (buttonRef.current[page] = el)}
           style={{ border: `${currentPage == page ? "2px solid green" : ""}` }}
         >
           {page}

@@ -16,10 +16,9 @@ type PhotoDialog = {
 function PhotoDialog({ setImage }: PhotoDialog) {
   const [dragItem, setDragItem] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState("");
-  const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("files", e.target.files);
-    if (e.target.files && e.target.files[0]) {
-      const url = URL.createObjectURL(e.target.files[0]);
+  const selectFile = (file: FileList | null) => {
+    if (file && file[0]) {
+      const url = URL.createObjectURL(file[0]);
       setImage(url);
       setPreviewImage(url);
     }
@@ -35,14 +34,9 @@ function PhotoDialog({ setImage }: PhotoDialog) {
     setDragItem(false);
   }
   function handleFileDrop(e: React.DragEvent<HTMLInputElement>) {
-    console.log("dataTransfer.files => ", e.dataTransfer.files[0]);
     e.preventDefault();
     e.stopPropagation();
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const url = URL.createObjectURL(e.dataTransfer.files[0]);
-      setPreviewImage(url);
-      setImage(url);
-    }
+    selectFile(e.dataTransfer.files);
   }
   return (
     <Dialog>
@@ -72,7 +66,7 @@ function PhotoDialog({ setImage }: PhotoDialog) {
               id="name-1"
               accept="image/*"
               className="hidden"
-              onChange={(e) => selectFile(e)}
+              onChange={(e) => selectFile(e.target.files)}
             />
           </label>
 
